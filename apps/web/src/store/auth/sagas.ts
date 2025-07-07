@@ -32,7 +32,7 @@ import { AuthActionTypes } from './types';
 
 export interface ResponseGenerator {
   config?: any;
-  data?: any;
+  data?: [];
   headers?: any;
   request?: any;
   status?: number;
