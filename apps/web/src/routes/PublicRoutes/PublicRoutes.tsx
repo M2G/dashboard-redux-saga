@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 
 import ROUTER_PATH from '@/constants/RouterPath';
 import { lazy } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router';
 
 const Signin = lazy(() => import('@/containers/Signin'));
 const Signup = lazy(() => import('@/containers/Signup'));

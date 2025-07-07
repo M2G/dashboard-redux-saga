@@ -1,16 +1,14 @@
 import type { JSX } from 'react';
-
-import ROUTER_PATH from '@/constants/RouterPath';
 import { lazy } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import Navbar from '@/components/Navbar/Navbar';
+import { Navigate, Route, Routes } from 'react-router';
+import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
+import ROUTER_PATH from '@/constants/RouterPath';
 
 const Home = lazy(() => import('@/containers/Home'));
-const Users = lazy(() => import('@/containers/Users'));
+const Users = lazy(() => import('@/containers/Users2'));
 const ChangePassword = lazy(() => import('@/containers/ChangePassword'));
 const Profil = lazy(() => import('@/containers/Profil'));
-const Concerts = lazy(() => import('@/containers/Concerts'));
 
 function PrivateRoutes(): JSX.Element {
   return (
@@ -18,11 +16,13 @@ function PrivateRoutes(): JSX.Element {
       <Navbar />
       <Sidebar />
       <Routes>
-        <Route element={<Home />} path={ROUTER_PATH.HOME} />
-        <Route element={<Users />} path={ROUTER_PATH.USERS} />
-        <Route element={<Profil />} path={ROUTER_PATH.PROFIL} />
-        <Route element={<ChangePassword />} path={ROUTER_PATH.CHANGE_PASSWORD} />
-        <Route element={<Concerts />} path={ROUTER_PATH.CONCERTS} />
+        <Route path={ROUTER_PATH.HOME} element={<Home />} />
+        <Route path={ROUTER_PATH.USERS} element={<Users />} />
+        <Route path={ROUTER_PATH.PROFIL} element={<Profil />} />
+        <Route
+          path={ROUTER_PATH.CHANGE_PASSWORD}
+          element={<ChangePassword />}
+        />
         <Route element={<Navigate replace to={ROUTER_PATH.HOME} />} path="*" />
       </Routes>
     </>

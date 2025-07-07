@@ -1,10 +1,11 @@
 import type { JSX } from 'react';
-
 import { Suspense, useContext } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
 import { AuthContext } from '@/AuthContext';
 import TopLineLoading from '@/components/Loading/TopLineLoading';
+
+
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 
@@ -20,9 +21,11 @@ interface Auth {
 }
 
 function Router(): JSX.Element {
-  const { isAuth } = useContext(AuthContext) as Auth;
-  const { userData } = useContext(AuthContext) as Auth;
+  const { isAuth, userData } = useContext(AuthContext) as Auth;
   const userId = userData?.id;
+
+  console.log("userId:", userId);
+  console.log("isAuth:", isAuth);
 
   return (
     <main>
