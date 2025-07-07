@@ -1,36 +1,65 @@
 import type { Context, JSX, ReactNode } from 'react';
 
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState, useLayoutEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 import {
-  clearAuthStorage,
+  clearAccessTokenStorage,
+  clearRefreshTokenStorage,
   clearUserStorage,
-  getAuthStorage,
+  getAccessTokenStorage,
   getUserStorage,
-  setAuthStorage,
+  setAccessTokenStorage,
+  setRefreshTokenStorage,
   setUserStorage,
 } from '@/services/storage';
 
-import jwt_decode from 'jwt-decode';
+type AuthContextType = {
+  activateAuth: (token: { accessToken?: string; refreshToken?: string }) => void;
+  isAuth: boolean | null | string;
+  removeAuth: () => void;
+  userData: {
+    email: string;
+    id: number;
+  } | null;
+};
 
-export const AuthContext: Context<NonNullable<unknown>> = createContext({});
+// @see https://twitter.com/gregberge_/status/1750111230554153450/photo/1
+// keep context private
+export const AuthContext: Context<AuthContextType | undefined> = createContext<
+  AuthContextType | undefined
+>(undefined);
+
+// export a consumer and throw if default value
+export function useAuth(): AuthContextType {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within a AuthProvider');
+  }
+  return context;
+}
+
 interface AuthContextProps {
   children: ReactNode;
 }
-
+// export a provider
 function Provider({ children }: AuthContextProps): JSX.Element {
+
   const [isAuth, setIsAuth] = useState<boolean | null | string>(() =>
-    getAuthStorage(),
+    getAccessTokenStorage(),
   );
+
   const [userData, setUserData] = useState<boolean | null | string>(() =>
     getUserStorage(),
   );
 
   const value = {
-    activateAuth: (token: string) => {
+    activateAuth(auth: { accessToken: string; refreshToken: string }) {
+      console.log('activateAuth', auth);
+
       const decodedToken: {
         email: string;
         id: number;
-      } = jwt_decode(token) || {};
+      } = jwtDecode(auth.accessToken) || {};
 
       const user = {
         email: decodedToken.email,
@@ -38,15 +67,17 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       };
       setUserStorage(JSON.stringify(user));
       setUserData(JSON.stringify(user));
-      setAuthStorage(token);
+      setAccessTokenStorage(auth.accessToken);
+      setRefreshTokenStorage(auth.refreshToken);
       setIsAuth(true);
     },
     isAuth,
-    removeAuth: () => {
+    removeAuth() {
       setIsAuth(false);
       setUserStorage(null);
       clearUserStorage();
-      clearAuthStorage();
+      clearRefreshTokenStorage();
+      clearAccessTokenStorage();
     },
     userData: userData ? JSON.parse(userData as string) : null,
   };
