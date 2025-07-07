@@ -1,5 +1,9 @@
-import PropTypes from 'prop-types';
-import { FC, HTMLInputTypeAttribute, InputHTMLAttributes, ReactNode } from 'react';
+import {
+  FC,
+  HTMLInputTypeAttribute,
+  InputHTMLAttributes,
+  ReactNode,
+} from 'react';
 import { FieldErrors } from 'react-hook-form';
 
 import { AnyComponent } from '@types';
@@ -17,7 +21,8 @@ import { AnyComponent } from '@types';
  *
  * @returns {JSX.Element}
  */
-interface FieldProps extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+interface FieldProps
+  extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
   errors?: FieldErrors;
   icon?: ReactNode;
   label: string;
@@ -40,7 +45,7 @@ export const StatusVariants = {
   warning: 'border-2 border-warning _:focus:border-warning',
 };
 
-export const Field: FC<FieldProps> = ({
+const Field: FC<FieldProps> = ({
   // basics
   className = '',
   errors,
@@ -81,6 +86,7 @@ export const Field: FC<FieldProps> = ({
             StatusVariants[status],
             errors && errors[name] && '_:border-2 _:border-danger',
           ].join(' ')}
+          data-testid={name}
           aria-invalid={errors && errors[name] ? 'true' : 'false'}
           type={type}
           defaultValue={defaultValue}
@@ -99,18 +105,12 @@ export const Field: FC<FieldProps> = ({
         </label>
       </div>
       {errors?.[name]?.message ? (
-        <div className="mt-1 border bg-red-100 px-4 py-3" role="alert">
-          <span>{errors[name].message}</span>
+        <div className="py-1" role="alert">
+          <span className="text-danger">{errors[name].message}</span>
         </div>
       ) : null}
     </div>
   );
 };
 
-Field.propTypes = {
-  label: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  status: PropTypes.oneOf(['default', 'danger', 'success', 'warning']),
-  tag: PropTypes.oneOf(['input', 'textarea']),
-  type: PropTypes.oneOf(['text', 'email', 'password', 'number', 'tel']),
-};
+export default Field;

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { all, call, fork, put, takeEvery } from 'redux-saga/effects';
 import {
   deleteUsersService,
@@ -9,11 +8,11 @@ import {
   userProfilService,
 } from './services';
 
-import ROUTER_PATH from 'constants/RouterPath';
-import { history } from 'index';
-import { clearAuthStorage, clearUserStorage } from 'services/storage';
-import { signoutUserAction } from 'store/signout/actions';
-import Config from '../../constants';
+import ROUTER_PATH from '@/constants/RouterPath';
+import { history } from '@/index';
+import { clearAccessTokenStorage, clearUserStorage } from '@/services/storage';
+import signoutUserAction from '@/store/signout/actions';
+import Config from '@/constants';
 import {
   authDeleteUserProfilError,
   authDeleteUserProfilSuccess,
@@ -79,7 +78,7 @@ function* getUserProfil(params: { id }): any {
     yield put(authGetUserProfilSuccess({ ...res.data }));
   } catch (err) {
     if (err?.response?.status === 401) {
-      yield clearAuthStorage();
+      yield clearAccessTokenStorage();
       yield clearUserStorage();
       yield call(forwardTo, history, ROUTER_PATH.SIGNIN);
       return yield put(signoutUserAction({ ...err.response.data.error }));
@@ -96,10 +95,10 @@ function* getUserProfil(params: { id }): any {
 function* getUsersProfil({ filters, page, pageSize }): any {
   try {
     const res = yield call(getUsersService, { filters, page, pageSize });
-    yield put(authGetUsersProfilSuccess({ filters, ...res.data }));
+    yield put(authGetUsersProfilSuccess({ filters, data: res?.data?.results }));
   } catch (err) {
     if (err?.response?.status === 401) {
-      yield clearAuthStorage();
+      yield clearAccessTokenStorage();
       yield clearUserStorage();
       yield call(forwardTo, history, ROUTER_PATH.SIGNIN);
       return yield put(signoutUserAction({ ...err.response.data.error }));

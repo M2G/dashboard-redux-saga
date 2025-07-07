@@ -1,25 +1,35 @@
 import { SigninActionTypes } from './types';
 
-const signinUserPrepare = (user: any, options: any) => ({
-  options,
-  type: SigninActionTypes.SIGNIN_USER_PREPARE,
-  user,
-});
+function signinUserPrepare(user: any, options: any) {
+  return {
+    options,
+    type: SigninActionTypes.SIGNIN_USER_PREPARE,
+    user,
+  }
+}
 
-const signinUserAction = (user: any) => ({
-  type: SigninActionTypes.SIGNIN_USER_REQUEST,
-  user,
-});
+function signinUserAction(user: any) {
+ return {
+   type: SigninActionTypes.SIGNIN_USER_REQUEST,
+   user,
+ }
+}
 
-const signinUserSuccess = (data) => ({
-  type: SigninActionTypes.SIGNIN_USER_SUCCESS,
-  ...data,
-});
+function signinUserSuccess(data) {
+ console.log('signinUserSuccess', data);
+  return {
+   type: SigninActionTypes.SIGNIN_USER_SUCCESS,
+    data,
+   ...data,
+ }
+}
 
-const signinUserError = (errors: any) => ({
-  errors,
-  type: SigninActionTypes.SIGNIN_USER_ERROR,
-});
+function signinUserError(errors: any) {
+  return {
+    errors,
+    type: SigninActionTypes.SIGNIN_USER_ERROR,
+  }
+}
 
 export {
   signinUserAction,

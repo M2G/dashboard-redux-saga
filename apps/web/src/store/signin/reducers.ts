@@ -10,6 +10,8 @@ export const initialState: SigninState = {
 };
 
 const reducer: Reducer<SigninState> = (state = initialState, action) => {
+ console.log("Signin reducer action:", action);
+
   const { data = {}, errors, type } = action || {};
   switch (type) {
     case SigninActionTypes.SIGNIN_USER_REQUEST:

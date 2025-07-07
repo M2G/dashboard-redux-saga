@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { HTMLAttributes, ReactNode } from 'react';
 
 import { AnyComponent } from '@types';
@@ -18,14 +17,14 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
  *
  * @returns {JSX.Element}
  */
-export function Card({ tag = 'div', children, ...rest }: CardProps) {
+function Card({ tag = 'div', children, ...rest }: CardProps) {
   const DynamicTag = tag || (`${tag}` as keyof AnyComponent);
 
   return (
     <DynamicTag
       {...rest}
       className={[
-        'max-w-sm rounded-lg border border-gray-200 bg-transparent p-6 shadow dark:border-gray-700 dark:bg-gray-800',
+        'min-h-[220px] rounded-lg border border-white border-opacity-10 bg-transparent p-6 shadow dark:border-gray-700 dark:bg-gray-800',
         rest.className,
       ].join(' ')}>
       {children}
@@ -33,14 +32,4 @@ export function Card({ tag = 'div', children, ...rest }: CardProps) {
   );
 }
 
-Card.propTypes = {
-  tag: PropTypes.oneOf([
-    'div',
-    'header',
-    'footer',
-    'section',
-    'article',
-    'main',
-  ]),
-  children: PropTypes.node.isRequired,
-};
+export default Card;

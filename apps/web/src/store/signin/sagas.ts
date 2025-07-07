@@ -5,21 +5,30 @@
 import { all, fork, call, put, take, StrictEffect, TakeEffect, CallEffect } from 'redux-saga/effects';
 import signinService from './services';
 import { SigninActionTypes } from './types';
+import { setAccessTokenStorage } from '@/services/storage';
 import { signinUserSuccess, signinUserError } from './actions';
-import { signinSuccess } from '../../actions';
-import Config from 'constants/index';
-import { history } from 'index';
-import ROUTER_PATH from 'constants/RouterPath';
+import { signinSuccess } from '@/actions';
+import Config from '@/constants/index';
+import { history } from '@/index';
+import ROUTER_PATH from '@/constants/RouterPath';
 
 function forwardTo(history: { push: Function }, location: string) {
+  console.log('history', history);
     return history.push({ pathname: location });
 }
 
 function* authorize({ ...params }): Generator<StrictEffect, any, any> {
    try {
     const response = yield call(signinService, params);
-        const { data: { token } } = response?.data;
-        Config.GLOBAL_VAR.token = token;
+
+     console.log('response', response);
+
+        const { accessToken } = response?.data;
+
+        console.log('accessToken', accessToken);
+
+        Config.GLOBAL_VAR.token = accessToken;
+        setAccessTokenStorage(accessToken);
         yield put(signinUserSuccess({ ...response?.data }));
         yield put(signinSuccess());
         yield call(forwardTo, history, ROUTER_PATH.HOME);
@@ -27,9 +36,7 @@ function* authorize({ ...params }): Generator<StrictEffect, any, any> {
      if (err instanceof Error) {
       return yield put(signinUserError({ ...(err.stack as any) }));
      }
-
      yield put(signinUserError("An unknown error occured."));
-
    }
 }
 
