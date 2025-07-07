@@ -1,7 +1,7 @@
-import { getAuthStorage } from 'services/storage';
+import { getAccessTokenStorage } from 'services/storage';
 import ROUTER_PATH from './RouterPath';
 
-const authData = getAuthStorage();
+const authData = getAccessTokenStorage();
 
 // const token = authData ? JSON.parse(authData).auth_token : '';
 
