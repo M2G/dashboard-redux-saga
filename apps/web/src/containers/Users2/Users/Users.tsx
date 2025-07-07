@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
-import UserList from '@/containers/UserList/UserList';
+import UserList from '@/containers/Users2/UserList';
+import './index.scss';
 
 function Users(): JSX.Element {
   return (

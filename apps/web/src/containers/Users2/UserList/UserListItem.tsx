@@ -17,7 +17,7 @@ export interface IUserListItem {
   user: User;
 }
 
-function userListItem({
+function UserListItem({
   canDelete,
   canEdit,
   id: rowId,
@@ -93,4 +93,4 @@ function userListItem({
   ];
 }
 
-export default userListItem;
+export default UserListItem;

@@ -1,19 +1,17 @@
-import type { JSX } from 'react';
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { authForgotPasswordAction } from "store/auth/actions";
 import { INITIAL_VALUES } from './constants';
-import useForgotPassword from './hooks';
-import ForgotPasswordView from '@/components/ForgotPasswordForm';
+import ForgotPasswordView from './ForgotPassword';
 
-function ForgotPassword(): JSX.Element {
-  const mutation = useForgotPassword();
+function ForgotPassword() {
+  const dispatch = useDispatch();
   const onSubmit = useCallback(
-    (e: any) => mutation.mutate({ ...e }),
-    [mutation],
+    (e) => dispatch(authForgotPasswordAction(e)),
+    [dispatch],
   );
 
-  return (
-    <ForgotPasswordView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />
-  );
+  return <ForgotPasswordView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
 }
 
 export default ForgotPassword;

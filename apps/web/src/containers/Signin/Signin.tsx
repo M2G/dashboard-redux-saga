@@ -1,19 +1,26 @@
-import type { JSX } from 'react';
-import { useCallback, useContext } from 'react';
+import { JSX, useCallback } from 'react';
+import { useAuth } from '@/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { signinUserAction } from '@/store/signin/actions';
 import SigninForm from '@/components/SigninForm';
 import { INITIAL_VALUES } from './constants';
-import { AuthContext } from '@/AuthContext';
-import useSignin from './hooks';
 
 function Signin(): JSX.Element {
-  const { activateAuth }: any = useContext(AuthContext);
-  const mutation = useSignin();
+  const dispatch = useDispatch()
+  const { activateAuth } = useAuth();
+
+  useSelector(
+    (state): void => {
+      console.log('RENDER')
+      state?.signin?.data?.accessToken && activateAuth({ accessToken: state.signin.data.accessToken });
+    }
+  );
 
   const onSubmit = useCallback(
     (e: { email: string; password: string }): void => {
-      mutation.mutate({ ...e });
+      dispatch(signinUserAction(e));
     },
-    [mutation],
+    [dispatch],
   );
 
   return <SigninForm initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;

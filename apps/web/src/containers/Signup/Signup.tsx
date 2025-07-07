@@ -1,20 +1,17 @@
-import type { JSX } from 'react';
 import { useCallback } from 'react';
-import SignupForm from '@/components/SignupForm';
+import { useDispatch } from 'react-redux';
+import { signupUserAction } from '@/store/signup/actions';
 import { INITIAL_VALUES } from './constants';
-import useSignup from './hooks';
+import SignupView from './Signup';
 
-function Signup(): JSX.Element {
-  const mutation = useSignup();
-
+function Signin() {
+  const dispatch = useDispatch();
   const onSubmit = useCallback(
-    (e: { email: string; password: string }) => {
-      mutation.mutate({ ...e });
-    },
-    [mutation],
+    (e) => dispatch(signupUserAction(e)),
+    [dispatch],
   );
 
-  return <SignupForm initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
+  return <SignupView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
 }
 
-export default Signup;
+export default Signin;
