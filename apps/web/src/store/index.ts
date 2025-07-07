@@ -1,26 +1,22 @@
-/* eslint-disable */
 import { all, fork } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 
-import { authReducer } from './auth/reducers';
+import { authReducer } from '@/store/auth/reducers';
 import { signinReducer } from './signin/reducers';
 import { signupReducer } from './signup/reducers';
 import { signoutReducer } from './signout/reducers';
 import { authGlobalReducer } from '../reducers';
 
-import { authSaga } from './auth/sagas';
+import { authSaga } from '@/store/auth/sagas';
 import { signinSaga } from './signin/sagas';
 import { signupSaga } from './signup/sagas';
 import { signoutSaga } from './signout/sagas';
-import { concertSaga } from './concerts/sagas';
 
-import { AuthState } from './auth/types';
+import { AuthState } from '@/store/auth/types';
 import { SigninState } from './signin/types';
 import { SignupState } from './signup/types';
 import { SignoutState } from './signout/types';
 import { AuthGlobalState } from '@/types';
-import { ConcertState } from '@/store/concerts/types';
-import { concertReducer } from '@/store/concerts/reducers';
 
 // The top-level state object
 export interface ApplicationState {
@@ -29,7 +25,6 @@ export interface ApplicationState {
   signout: SignoutState;
   auth: AuthState;
   auth_global: AuthGlobalState;
-  concert: ConcertState;
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -46,10 +41,8 @@ function rootReducer() {
     auth: authReducer,
     auth_global: authGlobalReducer,
     signup: signupReducer,
-    //signinplatform: signinPlatformReducer,
     signin: signinReducer,
     signout: signoutReducer,
-    concert: concertReducer,
   });
 }
 
@@ -64,8 +57,7 @@ function* rootSaga() {
     fork(signupSaga),
     fork(signoutSaga),
     fork(authSaga),
-    fork(concertSaga),
   ]);
 }
-//@ts-ignore
+
 export { rootSaga, rootReducer, ApplicationState };

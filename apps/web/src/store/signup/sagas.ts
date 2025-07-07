@@ -5,13 +5,16 @@ import type {
   CallEffect,
   ForkEffect,
 } from 'redux-saga/effects';
+
+import ROUTER_PATH from '@/constants/RouterPath';
+import { history } from '@/index';
 import { all, fork, call, put, take } from 'redux-saga/effects';
-import { history } from 'index';
-import ROUTER_PATH from 'constants/RouterPath';
-import signupUserService from './services';
-import { SignupActionTypes } from './types';
+
+import { signupSuccess } from '@/actions';
 import { signupUserSuccess, signupUserError } from './actions';
-import { signupSuccess } from '../../actions';
+import signupUserService from './services';
+
+import { SignupActionTypes } from './types';
 
 function forwardTo(history: { push: Function }, location: string) {
   return history.push({ pathname: location });

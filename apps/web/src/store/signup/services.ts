@@ -1,7 +1,6 @@
-/* eslint-disable */
-import api from 'api';
+import api from '@/api';
 
-function signupUserService(params: any) {
+function signupUserService(params: { email: string; password: string; }) {
   return api.post('/auth/register', params);
 }
 
