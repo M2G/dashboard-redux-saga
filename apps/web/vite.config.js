@@ -13,14 +13,16 @@ export default defineConfig(() => {
       'process.env': {},
       'import.meta.env.PACKAGE_VERSION': JSON.stringify(packageJson.version),
     },
-    plugins: [react(), svgr()],
+    plugins: [react(), svgr({
+      svgrOptions: { exportType: 'named', ref: true },
+      include: '**/*.svg',
+    }),],
     publicDir: 'public',
     resolve: {
       alias: {
         '@types': path.resolve(__dirname, './src/@types'),
         '@': path.resolve(__dirname, './src'),
         api: path.resolve(__dirname, './src/api/'),
-        api2: path.resolve(__dirname, './src/api2/'),
         assets: path.resolve(__dirname, './src/assets/'),
         components: path.resolve(__dirname, './src/components/'),
         constants: path.resolve(__dirname, './src/constants/'),
