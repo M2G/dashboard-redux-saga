@@ -6,7 +6,7 @@ import {
   recoverPasswordService,
   updateUserProfilService,
   userProfilService,
-} from './auth';
+} from './users';
 
 export {
   createUserProfilService,

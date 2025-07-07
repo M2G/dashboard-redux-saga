@@ -1,27 +1,45 @@
-const STORAGE_KEY_AUTH = 'auth';
+const STORAGE_KEY_ACCESS_TOKEN = 'accessToken';
+const STORAGE_KEY_REFRESH_TOKEN = 'refreshToken';
 const STORAGE_KEY_USER = 'user';
 
-const setAuthStorage = (authData: string) => {
-  localStorage.setItem(STORAGE_KEY_AUTH, authData);
-};
-const getAuthStorage = () => localStorage.getItem(STORAGE_KEY_AUTH);
-const clearAuthStorage = () => {
-  localStorage.removeItem(STORAGE_KEY_AUTH);
-};
+function setAccessTokenStorage(authData: string) {
+  return localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, authData);
+}
+function getAccessTokenStorage() {
+  return localStorage.getItem(STORAGE_KEY_ACCESS_TOKEN);
+}
+function clearAccessTokenStorage() {
+  return localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN);
+}
 
-const setUserStorage = (userData?: string) => {
-  localStorage.setItem(STORAGE_KEY_USER, userData as string);
-};
-const getUserStorage = () => localStorage.getItem(STORAGE_KEY_USER);
-const clearUserStorage = () => {
-  localStorage.removeItem(STORAGE_KEY_USER);
-};
+function setRefreshTokenStorage(authData: string) {
+  return localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, authData);
+}
+function getRefreshTokenStorage() {
+  return localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
+}
+function clearRefreshTokenStorage() {
+  return localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN);
+}
+
+function setUserStorage(userData?: string) {
+  return localStorage.setItem(STORAGE_KEY_USER, userData as string);
+}
+function getUserStorage() {
+  return localStorage.getItem(STORAGE_KEY_USER);
+}
+function clearUserStorage() {
+  return localStorage.removeItem(STORAGE_KEY_USER);
+}
 
 export {
-  clearAuthStorage,
+  clearAccessTokenStorage,
+  clearRefreshTokenStorage,
   clearUserStorage,
-  getAuthStorage,
+  getAccessTokenStorage,
+  getRefreshTokenStorage,
   getUserStorage,
-  setAuthStorage,
+  setAccessTokenStorage,
+  setRefreshTokenStorage,
   setUserStorage,
-};
+}

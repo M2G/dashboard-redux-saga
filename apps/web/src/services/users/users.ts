@@ -1,15 +1,15 @@
 import api from '@/api';
 
 function forgotPasswordService(params: any): Promise<any> {
-  return api.post('/auth/forgot-password', params);
+  return api.post('/users/forgot-password', params);
 }
 
 function recoverPasswordService(params: any): Promise<any> {
-  return api.post('/auth/reset-password', params);
+  return api.post('/users/reset-password', params);
 }
 
 function userProfilService(id: string): Promise<any> {
-  return api.get(`/auth/users/${id}`);
+  return api.get(`/users/${id}`);
 }
 
 function createUserProfilService(params: any): Promise<any> {
@@ -17,12 +17,12 @@ function createUserProfilService(params: any): Promise<any> {
 }
 
 function updateUserProfilService({ id, ...params }: any): Promise<any> {
-  return api.put(`/auth/users/${id}`, params);
+  return api.put(`/users/${id}`, params);
 }
 
 function getUsersService({ filters, page, pageSize }): Promise<any> {
   return api.get(
-    `/auth/users${
+    `/users${
       filters
         ? `?filters=${filters}&page=${page}&pageSize=${pageSize}`
         : `?page=${page}&pageSize=${pageSize}`
@@ -31,7 +31,7 @@ function getUsersService({ filters, page, pageSize }): Promise<any> {
 }
 
 function deleteUsersService(id: string): Promise<any> {
-  return api.delete(`/auth/users/${id}`);
+  return api.delete(`/users/${id}`);
 }
 
 export {

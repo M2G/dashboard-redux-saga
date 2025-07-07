@@ -1,18 +1,23 @@
 import {
-    clearAuthStorage,
-    clearUserStorage,
-    getAuthStorage,
-    getUserStorage,
-    setAuthStorage,
-    setUserStorage,
+  clearAccessTokenStorage,
+  clearRefreshTokenStorage,
+  clearUserStorage,
+  getAccessTokenStorage,
+  getRefreshTokenStorage,
+  getUserStorage,
+  setAccessTokenStorage,
+  setRefreshTokenStorage,
+  setUserStorage,
 } from './storage';
 
 export {
-    clearAuthStorage,
-    clearUserStorage,
-    getAuthStorage,
-    getUserStorage,
-    setAuthStorage,
-    setUserStorage,
-};
-
+  clearAccessTokenStorage,
+  clearRefreshTokenStorage,
+  clearUserStorage,
+  getAccessTokenStorage,
+  getRefreshTokenStorage,
+  getUserStorage,
+  setAccessTokenStorage,
+  setRefreshTokenStorage,
+  setUserStorage,
+}
