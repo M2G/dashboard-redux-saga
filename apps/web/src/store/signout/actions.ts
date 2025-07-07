@@ -1,11 +1,10 @@
-/* eslint-disable */
 import { SignoutActionTypes } from './types';
 
-function signoutUserAction(user: any) {
+function signoutUserAction(user) {
   return {
     type: SignoutActionTypes.SIGNOUT_USER_REQUEST,
     ...user,
   };
 }
 
-export { signoutUserAction };
+export default signoutUserAction;

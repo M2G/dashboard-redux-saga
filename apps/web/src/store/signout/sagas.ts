@@ -1,6 +1,6 @@
 import { all, fork, call, takeEvery, put } from 'redux-saga/effects';
 import { SignoutActionTypes } from './types';
-import { clearAuthStorage } from '@/services/storage';
+import { clearAccessTokenStorage } from '@/services/storage';
 import Config from '@/constants/constants';
 import { history } from '@/index';
 import { signoutSuccess } from '@/actions';
@@ -9,15 +9,15 @@ function* signoutFlow() {
   Config.GLOBAL_VAR.token = '';
 
   yield put(signoutSuccess());
-  yield call(clearAuthStorage);
-  yield call(forwardTo as any, history, Config.ROUTER_PATH.SIGNIN);
+  yield call(clearAccessTokenStorage);
+  yield call(forwardTo, history, Config.ROUTER_PATH.SIGNIN);
 }
 
 function* signoutRequest() {
   yield call(signoutFlow);
 }
 
-function forwardTo(history: any[], url: any) {
+function forwardTo(history: string[], url: string) {
   return history.push(url);
 }
 
