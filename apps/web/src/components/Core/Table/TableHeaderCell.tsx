@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import Icon from '@/components/Core/Icon';
-import IconNames from '@/components/Core/Icon/Icons.types';
+import { memo, useMemo } from 'react';
+import { Icon } from 'ui';
+import IconNames from 'ui/components/atoms/Icon/Icons.types';
 
 enum SortDirection {
   ASCENDING = 'ascending',
@@ -9,9 +9,9 @@ enum SortDirection {
 
 interface ITableHeaderCell {
   currentSortedData: any;
-  isSortable: any;
-  label: any;
-  onSort: any;
+  isSortable: boolean;
+  label: string;
+  onSort: (arg: SortDirection) => void;
 }
 
 function TableHeaderCell({
@@ -20,20 +20,20 @@ function TableHeaderCell({
   label,
   onSort,
 }: ITableHeaderCell): JSX.Element {
-  const onSortClick = () => {
+  function onSortClick(): void {
     onSort(
-      !currentSortedData || currentSortedData.direction === SortDirection.ASCENDING
+      currentSortedData?.direction === SortDirection.ASCENDING
         ? SortDirection.DESCENDING
         : SortDirection.ASCENDING,
     );
-  };
+  }
 
   const sortedClass = useMemo(
     () =>
       currentSortedData?.direction === SortDirection.ASCENDING
         ? IconNames.ARROW_DOWN
         : IconNames.ARROW_UP,
-    [currentSortedData],
+    [currentSortedData?.direction],
   );
 
   return (
@@ -43,11 +43,14 @@ function TableHeaderCell({
         <button
           className="sort-icon mb-0 rounded-none border-0 bg-transparent px-2 font-bold"
           onClick={onSortClick}>
-          <Icon className="fill-grey-dark w-4 cursor-pointer" icon={sortedClass} />
+          <Icon
+            as={sortedClass}
+            className="_:w-6 _:h-6 cursor-pointer mb-[-5px]"
+          />
         </button>
       )}
     </th>
   );
 }
 
-export default TableHeaderCell;
+export default memo(TableHeaderCell);

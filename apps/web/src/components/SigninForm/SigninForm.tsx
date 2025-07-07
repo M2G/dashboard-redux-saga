@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { useMemo } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -18,7 +19,6 @@ import {
   LABEL_PASSWORD,
   formSchema,
 } from './constants';
-import { useMemo } from 'react';
 
 type FormSchemaType = z.infer<typeof formSchema>;
 
@@ -40,7 +40,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
       }),
       [initialValues],
     ),
-    mode: 'onBlur',
+    mode: 'onSubmit',
     resolver: zodResolver(formSchema),
   });
 

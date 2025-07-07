@@ -1,24 +1,38 @@
-import Icon from '@/components/Core/Icon';
-import type IconNames from '@/components/Core/Icon/Icons.types';
+import { memo } from 'react';
+import { Icon } from 'ui';
+import type IconNames from 'ui/components/atoms/Icon/Icons.types';
 
 interface IAction {
-  actions: [
-    {
-      id: string;
-      action: () => void;
-      icon?: string;
-    },
-  ];
+  action: () => void;
+  icon?: string;
+  id: string;
 }
 
-function Action({ actions }: IAction): JSX.Element[] | undefined {
-  return actions?.map(({ id, action, icon }) => (
-    <div key={`actionCol__${id}`} className="cursor-pointer px-2">
+interface IActions {
+  actions: IAction[];
+}
+
+function Action({ action, icon, id }: IAction): JSX.Element {
+  return (
+    <div className="cursor-pointer px-2" key={`actionCol__${id}`}>
       <div aria-hidden="true" id={id} onClick={action}>
-        <Icon className="fill-grey-dark w-4 cursor-pointer" icon={icon as IconNames} />
+        <Icon as={icon as IconNames} className="fw-4 cursor-pointer" />
       </div>
     </div>
+  );
+}
+
+const MomoizedAction = memo(Action);
+
+function Actions({ actions }: IActions): JSX.Element[] | undefined {
+  return actions?.map(({ action, icon, id }) => (
+    <MomoizedAction
+      action={action}
+      icon={icon}
+      id={id}
+      key={`actionCol__${id}`}
+    />
   ));
 }
 
-export default Action;
+export default Actions;
