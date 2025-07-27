@@ -28,6 +28,8 @@ function UserEditForm({ initialValues, onSubmit }: IForm) {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
+    watch
   } = useForm<FormSchemaType>({
     defaultValues: useMemo(
       () => ({
@@ -46,25 +48,28 @@ function UserEditForm({ initialValues, onSubmit }: IForm) {
           label={t('field.firstname')}
           name={INPUT_NAME.FIRST_NAME}
           type="text"
-          {...{ errors, register }}
+          {...{ errors, register, control, watch }}
+         // defaultValue={initialValues?.firstname}
         />
         <Field
           className="_:mb-4"
           label={t('field.lastname')}
           name={INPUT_NAME.LAST_NAME}
           type="text"
-          {...{ errors, register }}
+          {...{ errors, register, control, watch }}
+         // defaultValue={initialValues?.lastname}
         />
         <Field
           className="_:mb-4"
           label={t('field.email')}
           name={INPUT_NAME.EMAIL}
           type="email"
-          {...{ errors, register }}
+          {...{ errors, register, control, watch }}
+          //defaultValue={initialValues?.email}
         />
         <Button
           className="_:bg-white _:font-normal _:text-black w-full"
-          disabled={isValid}
+          disabled={!isValid}
           type="submit"
           variant="primary">
           {t('form.save')}
