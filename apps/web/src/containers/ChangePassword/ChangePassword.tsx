@@ -1,6 +1,6 @@
 import { AuthContext } from '@/AuthContext';
 import ChangePassordForm from '@/components/ChangePassordForm';
-import { authUpdatePasswordAction } from '@/store/auth/actions';
+import { authUpdatePasswordAction } from '@/store/users/actions';
 import { useCallback, useContext } from 'react';
 import { useDispatch } from 'react-redux';
 
