@@ -23,6 +23,8 @@ function UserNewForm({ onSubmit }: IForm): JSX.Element {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
+    watch
   } = useForm<FormSchemaType>({
     defaultValues: useMemo(
       () => ({
@@ -38,23 +40,21 @@ function UserNewForm({ onSubmit }: IForm): JSX.Element {
       <form className="p-2" onSubmit={handleSubmit(onSubmit)}>
         <Field
           className="_:mb-4"
-          defaultValue={INITIAL_VALUES.EMAIL}
           label={t('field.email')}
           name={INPUT_NAME.EMAIL}
           type="email"
-          {...{ errors, register }}
+          {...{ errors, register, control, watch }}
         />
         <Field
           className="_:mb-4"
-          defaultValue={INITIAL_VALUES.PASSWORD}
           label={t('field.password')}
           name={INPUT_NAME.PASSWORD}
           type="password"
-          {...{ errors, register }}
+          {...{ errors, register, control, watch }}
         />
         <Button
           className="_:bg-white _:font-normal _:text-black w-full"
-          disabled={isValid}
+          disabled={!isValid}
           type="submit"
           variant="primary">
           {t('form.save')}
