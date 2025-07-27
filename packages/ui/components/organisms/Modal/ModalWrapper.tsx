@@ -5,8 +5,7 @@ interface IModalWrapper {
   hide: any;
   id?: string | undefined;
   isShowing: any;
-  onConfirm: any;
-  title: any;
+  onConfirm: () => void;
 }
 
 function ModalWrapper({
@@ -15,15 +14,13 @@ function ModalWrapper({
   id,
   isShowing,
   onConfirm,
-  title,
-}: IModalWrapper): JSX.Element {
+}: IModalWrapper) {
   return (
     <Modal
       hide={hide}
       id={id}
       isShowing={isShowing}
-      onConfirm={onConfirm}
-      title={title}>
+      onConfirm={onConfirm}>
       {children}
     </Modal>
   );
