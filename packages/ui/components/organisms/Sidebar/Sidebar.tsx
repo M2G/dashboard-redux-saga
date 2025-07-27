@@ -1,6 +1,8 @@
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import clsx from 'clsx';
+import { Icon } from '../../atoms';
+import IconNames from '../../atoms/Icon/Icons.types';
 
 interface ISidebar {
   children: ReactNode;
@@ -22,20 +24,10 @@ function Sidebar({ children, setIsOpened, show }: ISidebar): JSX.Element {
           onClick={() => setIsOpened(false)}
           role="button"
           tabIndex={0}>
-          <svg
-            className="h-6 w-6 stroke-white"
-            fill="none"
-            height="24"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg">
-            <line x1="18" x2="6" y1="6" y2="18" />
-            <line x1="6" x2="18" y1="6" y2="18" />
-          </svg>
+          <Icon
+            as={IconNames.CROSS}
+            className="_:stroke-white  _:h-5 _:w-10 _:min-h-6"
+          />
         </div>
         <div>{children}</div>
       </div>

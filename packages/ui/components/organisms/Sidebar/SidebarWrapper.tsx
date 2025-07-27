@@ -1,4 +1,4 @@
-import type { Dispatch, JSX, ReactNode, SetStateAction } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import Background from './Background';
 import Sidebar from './Sidebar';
