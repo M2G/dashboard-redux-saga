@@ -11,7 +11,7 @@ import {
 import ROUTER_PATH from '@/constants/RouterPath';
 import { history } from '@/index';
 import { clearAccessTokenStorage, clearUserStorage } from '@/services/storage';
-import signoutUserAction from '@/store/auth2/signout/actions';
+import signoutUserAction from '@/store/auth/signout/actions';
 import Config from '@/constants';
 import {
   authDeleteUserProfilError,
@@ -28,7 +28,7 @@ import {
   authUpdateUserProfilError,
   authUpdateUserProfilSuccess,
 } from './actions';
-import { AuthActionTypes } from './types';
+import { UserActionTypes } from './types';
 
 export interface ResponseGenerator {
   config?: any;
@@ -180,35 +180,35 @@ function* updatePassword(api, action) {
 */
 
 function* watchCreateUserProfil() {
-  yield takeEvery(AuthActionTypes.AUTH_CREATE_USER_PROFIL_REQUEST, createUserProfil);
+  yield takeEvery(UserActionTypes.USERS_CREATE_USER_PROFIL_REQUEST, createUserProfil);
 }
 
 function* watchRecoverPassword() {
-  yield takeEvery(AuthActionTypes.AUTH_RECOVER_PASSWORD_REQUEST, recoverPassword);
+  yield takeEvery(UserActionTypes.USERS_RECOVER_PASSWORD_REQUEST, recoverPassword);
 }
 
 function* watchForgotPassword() {
-  yield takeEvery(AuthActionTypes.AUTH_FORGOT_PASSWORD_REQUEST, forgotPassword);
+  yield takeEvery(UserActionTypes.USERS_FORGOT_PASSWORD_REQUEST, forgotPassword);
 }
 
 function* watchUser() {
-  yield takeEvery(AuthActionTypes.AUTH_GET_USER_PROFIL_REQUEST as any, getUserProfil);
+  yield takeEvery(UserActionTypes.USERS_GET_USER_PROFIL_REQUEST as any, getUserProfil);
 }
 
 function* watchUsers() {
-  yield takeEvery(AuthActionTypes.AUTH_GET_USERS_PROFIL_REQUEST as any, getUsersProfil);
+  yield takeEvery(UserActionTypes.USERS_GET_USERS_PROFIL_REQUEST as any, getUsersProfil);
 }
 
 function* watchUpdateUser() {
-  yield takeEvery(AuthActionTypes.AUTH_UPDATE_USER_PROFIL_REQUEST as any, updateUserProfil);
+  yield takeEvery(UserActionTypes.USERS_UPDATE_USER_PROFIL_REQUEST as any, updateUserProfil);
 }
 
 function* watchUpdateUserPassword() {
-  yield takeEvery(AuthActionTypes.AUTH_UPDATE_PASSWORD_REQUEST as any, updateUserProfil);
+  yield takeEvery(UserActionTypes.USERS_UPDATE_PASSWORD_REQUEST as any, updateUserProfil);
 }
 
 function* watchDeleteUser() {
-  yield takeEvery(AuthActionTypes.AUTH_DELETE_USER_PROFIL_REQUEST as any, deleteUserProfil);
+  yield takeEvery(UserActionTypes.USERS_DELETE_USER_PROFIL_REQUEST as any, deleteUserProfil);
 }
 
 // We can also use `fork()` here to split our saga into multiple watchers.

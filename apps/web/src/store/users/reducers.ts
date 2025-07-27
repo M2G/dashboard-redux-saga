@@ -1,68 +1,68 @@
 /* eslint-disable */
 import { Reducer } from 'redux';
-import { AuthActionTypes, AuthState } from './types';
+import { UserActionTypes, UserState } from './types';
 
 // Type-safe initialState!
-export const initialState: AuthState = {
+export const initialState: UserState = {
   data: [],
   errors: undefined,
   loading: false,
 };
 
-const reducer: Reducer<AuthState> = (state = initialState, action) => {
+const reducer: Reducer<UserState> = (state = initialState, action) => {
   const { data, errors, type } = action || {};
   switch (type) {
-    case AuthActionTypes.AUTH_GET_USER_PROFIL_REQUEST:
+    case UserActionTypes.USERS_GET_USER_PROFIL_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_GET_USERS_PROFIL_REQUEST:
+    case UserActionTypes.USERS_GET_USERS_PROFIL_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_CREATE_USER_PROFIL_REQUEST:
+    case UserActionTypes.USERS_CREATE_USER_PROFIL_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_UPDATE_PASSWORD_REQUEST:
+    case UserActionTypes.USERS_UPDATE_PASSWORD_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_RECOVER_PASSWORD_REQUEST:
+    case UserActionTypes.USERS_RECOVER_PASSWORD_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_FORGOT_PASSWORD_REQUEST:
+    case UserActionTypes.USERS_FORGOT_PASSWORD_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_DELETE_USER_PROFIL_REQUEST:
+    case UserActionTypes.USERS_DELETE_USER_PROFIL_REQUEST:
       return { ...state, loading: true };
-    case AuthActionTypes.AUTH_UPDATE_USER_PROFIL_REQUEST:
+    case UserActionTypes.USERS_UPDATE_USER_PROFIL_REQUEST:
       return { ...state, loading: true };
 
-    case AuthActionTypes.AUTH_GET_USER_PROFIL_SUCCESS:
+    case UserActionTypes.USERS_GET_USER_PROFIL_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_GET_USERS_PROFIL_SUCCESS:
+    case UserActionTypes.USERS_GET_USERS_PROFIL_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_CREATE_USER_PROFIL_SUCCESS:
+    case UserActionTypes.USERS_CREATE_USER_PROFIL_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_UPDATE_USER_PROFIL_SUCCESS:
+    case UserActionTypes.USERS_UPDATE_USER_PROFIL_SUCCESS:
       return { ...state, loading: false };
-    case AuthActionTypes.AUTH_UPDATE_PASSWORD_SUCCESS:
+    case UserActionTypes.USERS_UPDATE_PASSWORD_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_RECOVER_PASSWORD_SUCCESS:
+    case UserActionTypes.USERS_RECOVER_PASSWORD_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_FORGOT_PASSWORD_SUCCESS:
+    case UserActionTypes.USERS_FORGOT_PASSWORD_SUCCESS:
       return { ...state, loading: false, data };
-    case AuthActionTypes.AUTH_DELETE_USER_PROFIL_SUCCESS:
+    case UserActionTypes.USERS_DELETE_USER_PROFIL_SUCCESS:
       return { ...state, loading: false, data };
 
-    case AuthActionTypes.AUTH_DELETE_USER_PROFIL_ERROR:
+    case UserActionTypes.USERS_DELETE_USER_PROFIL_ERROR:
       return { ...state, loading: false, errors };
-    case AuthActionTypes.AUTH_GET_USER_PROFIL_ERROR:
+    case UserActionTypes.USERS_GET_USER_PROFIL_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_GET_USERS_PROFIL_ERROR:
+    case UserActionTypes.USERS_GET_USERS_PROFIL_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_CREATE_USER_PROFIL_ERROR:
+    case UserActionTypes.USERS_CREATE_USER_PROFIL_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_UPDATE_USER_PROFIL_ERROR:
+    case UserActionTypes.USERS_UPDATE_USER_PROFIL_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_UPDATE_PASSWORD_ERROR:
+    case UserActionTypes.USERS_UPDATE_PASSWORD_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_RECOVER_PASSWORD_ERROR:
+    case UserActionTypes.USERS_RECOVER_PASSWORD_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_FORGOT_PASSWORD_ERROR:
+    case UserActionTypes.USERS_FORGOT_PASSWORD_ERROR:
       return { ...state, loading: false, errors: data };
-    case AuthActionTypes.AUTH_REQUEST_ERROR:
+    case UserActionTypes.USERS_REQUEST_ERROR:
       return { ...state, loading: false, errors };
 
     default:
@@ -74,4 +74,4 @@ const reducer: Reducer<AuthState> = (state = initialState, action) => {
  * Instead of using default export, we use named exports. That way we can group these exports
  * inside the `index.js` folder.
  */
-export { reducer as authReducer };
+export { reducer as userReducer };

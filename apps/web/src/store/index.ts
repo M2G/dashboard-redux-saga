@@ -1,21 +1,21 @@
 import { all, fork } from 'redux-saga/effects';
 import { combineReducers } from 'redux';
 
-import { authReducer } from '@/store/auth/reducers';
-import { signinReducer } from './signin/reducers';
-import { signupReducer } from './signup/reducers';
-import { signoutReducer } from './signout/reducers';
+import { userReducer } from '@/store/users/reducers';
+import { signinReducer } from '@/store/auth/signin/reducers';
+import { signupReducer } from '@/store/auth/signup/reducers';
+import { signoutReducer } from '@/store/auth/signout/reducers';
 import { authGlobalReducer } from '../reducers';
 
-import { authSaga } from '@/store/auth/sagas';
-import { signinSaga } from './signin/sagas';
-import { signupSaga } from './signup/sagas';
-import { signoutSaga } from './signout/sagas';
+import { authSaga } from '@/store/users/sagas';
+import { signinSaga } from '@/store/auth/signin/sagas';
+import { signupSaga } from '@/store/auth/signup/sagas';
+import { signoutSaga } from '@/store/auth/signout/sagas';
 
-import { AuthState } from '@/store/auth/types';
-import { SigninState } from './signin/types';
-import { SignupState } from './signup/types';
-import { SignoutState } from './signout/types';
+import { UserState } from '@/store/users/types';
+import { SigninState } from '@/store/auth/signin/types';
+import { SignupState } from '@/store/auth/signup/types';
+import { SignoutState } from '@/store/auth/signout/types';
 import { AuthGlobalState } from '@/types';
 
 // The top-level state object
@@ -23,8 +23,8 @@ export interface ApplicationState {
   signin: SigninState;
   signup: SignupState;
   signout: SignoutState;
-  auth: AuthState;
-  auth_global: AuthGlobalState;
+  auth: AuthGlobalState;
+  users: UserState;
 }
 
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
@@ -38,11 +38,11 @@ export interface ApplicationState {
 // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types,@typescript-eslint/no-unused-vars-experimental
 function rootReducer() {
   return combineReducers({
-    auth: authReducer,
     auth_global: authGlobalReducer,
     signup: signupReducer,
     signin: signinReducer,
     signout: signoutReducer,
+    users: userReducer,
   });
 }
 
