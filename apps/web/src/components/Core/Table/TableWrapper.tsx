@@ -7,14 +7,12 @@ export const TableContext = createContext<Record<string, any>>({});
 interface ITableWrapper {
   className?: string;
   header: any;
-  id: number | string;
   rows: any;
 }
 
 function TableWrapper({
   className = '',
   header,
-  id,
   rows,
 }: ITableWrapper): JSX.Element {
   const [sortData, setSortData] = useState<any>(null);
@@ -68,8 +66,8 @@ function TableWrapper({
       <table
         className="c-table text-grey-dark w-full border-collapse"
         data-testid="table">
-        <TableHead id={id} />
-        <TableBody id={id} />
+        <TableHead />
+        <TableBody />
       </table>
     </TableContext.Provider>
   );

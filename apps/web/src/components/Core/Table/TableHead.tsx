@@ -5,11 +5,7 @@ import { useContext } from 'react';
 import TableHeaderCell from '@/components/Core/Table/TableHeaderCell';
 import { TableContext } from '@/components/Core/Table/TableWrapper';
 
-interface ITableHead {
-  id: number | string;
-}
-
-function TableHead({ id }: ITableHead): JSX.Element {
+function TableHead(): JSX.Element {
   const { handleSort, header, sortData } = useContext(TableContext);
   return (
     <thead data-testid="thead" className="text-left">
@@ -18,7 +14,7 @@ function TableHead({ id }: ITableHead): JSX.Element {
           <TableHeaderCell
             currentSortedData={sortData?.index === index ? sortData : null}
             isSortable={sortable}
-            key={`tableHeaderCell__${id}__${index}`}
+            key={`tableHeaderCell__${index}`}
             label={label}
             onSort={(sortDirection) => handleSort(index, sortDirection, type)}
           />
