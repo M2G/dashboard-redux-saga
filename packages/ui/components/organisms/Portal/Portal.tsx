@@ -1,4 +1,4 @@
-import type { ReactNode, ReactPortal } from 'react';
+import type { ReactPortal, ReactNode } from 'react';
 
 import { memo, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -8,7 +8,7 @@ interface IPortal {
   readonly id?: string | undefined;
 }
 
-function Portal({ children, id }: IPortal): ReactPortal | null {
+function Portal({ children, id }: IPortal): undefined | ReactPortal {
   const el = useRef(
     document.getElementById(id as string) ?? document.createElement('div'),
   );
