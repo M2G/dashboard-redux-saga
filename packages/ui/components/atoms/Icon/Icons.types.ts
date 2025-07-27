@@ -3,7 +3,7 @@ import type { ComponentType, SVGAttributes } from 'react';
 enum IconNames {
   ARROW_DOWN = 'arrow-down',
   ARROW_UP = 'arrow-up',
-  CONCERT = 'concert',
+  CROSS = 'cross',
   DELETE = 'delete',
   EDIT = 'edit',
   HOME = 'home',

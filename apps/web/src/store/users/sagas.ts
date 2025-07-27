@@ -11,7 +11,7 @@ import {
 import ROUTER_PATH from '@/constants/RouterPath';
 import { history } from '@/index';
 import { clearAccessTokenStorage, clearUserStorage } from '@/services/storage';
-import signoutUserAction from '@/store/signout/actions';
+import signoutUserAction from '@/store/auth2/signout/actions';
 import Config from '@/constants';
 import {
   authDeleteUserProfilError,

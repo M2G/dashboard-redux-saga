@@ -8,7 +8,7 @@ import { SigninActionTypes } from './types';
 import { setAccessTokenStorage } from '@/services/storage';
 import { signinUserSuccess, signinUserError } from './actions';
 import { signinSuccess } from '@/actions';
-import Config from '@/constants/index';
+import Config from '@/constants';
 import { history } from '@/index';
 import ROUTER_PATH from '@/constants/RouterPath';
 
