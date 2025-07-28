@@ -1,6 +1,5 @@
 import type { JSX } from 'react';
 import type { ITableStaticCol } from '@/components/Core/Table/TableStaticCol';
-import type { Maybe, User } from '@/modules/graphql/generated';
 
 import DateCell from '@/components/Core/Table/DateCell';
 import TableStaticCol from '@/components/Core/Table/TableStaticCol';
@@ -12,29 +11,28 @@ export interface IUserListItem {
   canEdit: boolean | undefined;
   id: string;
   label: string;
-  onDelete: (user: User) => void;
-  onEdit: (user: User) => void;
-  user: User;
+  onDelete: (user: any) => void;
+  onEdit: (user: any) => void;
+  user: any;
 }
 
 function UserListItem({
   canDelete,
   canEdit,
-  id: rowId,
   label,
   onDelete,
   onEdit,
   user,
 }: IUserListItem): (
   | {
-      display: Date | Maybe<number> | string | undefined;
+      display: Date | string | undefined;
       value: Date | null | number | string | undefined;
     }
   | { display: JSX.Element }
 )[] {
   console.log('userListItem', user);
 
-  const id = `user__row__${rowId}__${user.id}`;
+  const id = `user__row__${user.id}`;
 
   const actions = [];
 

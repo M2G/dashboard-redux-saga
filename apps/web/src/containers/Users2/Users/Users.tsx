@@ -9,7 +9,7 @@ function Users(): JSX.Element {
         <div className="o-grid__row">
           <div className="o-col">
             <div className="o-cell--one">
-              <UserList canAdd canDelete canEdit id="test" />
+              <UserList canDelete canEdit />
             </div>
           </div>
         </div>

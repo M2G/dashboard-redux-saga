@@ -1,165 +1,158 @@
-import {
-  useMemo,
-  useState,
-  useCallback,
-  useEffect,
-} from 'react';
+import { useMemo, useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from "react-i18next";
-import { signupUserAction } from '@/store/signup/actions';
+import { useTranslation } from 'react-i18next';
+import { signupUserAction } from '@/store/auth/signup/actions';
 import {
   authGetUsersProfilAction,
-  authDeleteUserProfilAction, authUpdateUserProfilAction } from '@/store/auth/actions';
+  authDeleteUserProfilAction,
+  authUpdateUserProfilAction,
+} from '@/store/users/actions';
 import TableWrapper from '@/components/Core/Table/TableWrapper';
-import { Sidebar as SidebarWrapper, Modal as ModalWrapper
+import {
+  Sidebar as SidebarWrapper,
+  Modal as ModalWrapper,
 } from 'ui/components/organisms';
 import TopLineLoading from '@/components/Loading/TopLineLoading';
-import userListItem from './UserListItem';
+import UserListItem from './UserListItem';
 import UserEdit from '@/components/Users/UserEdit';
 import UserNew from '@/components/Users/UserNew';
 
-function UserList({
-                    id, canEdit = false, canDelete = false, canAdd = false,
-                  }) {
+function UserList({ canEdit = false, canDelete = false }) {
   const { t } = useTranslation();
-  const [editingUser, setEditingUser] = useState(false);
-  const [newUser, setNewUser] = useState(false);
-  const [deletingUser, setDeletingUser] = useState(false);
+  const [isOpenedSidebar, setIsOpenedSidebar] = useState(false);
+  const [isOpenedModal, setIsOpenedModal] = useState(false);
 
-  const { auth,
-    // signup
-  } = useSelector((state) => {
+  console.log('isOpenedModal', isOpenedModal);
+
+  function selectors(state: { signup: any[]; users: any[] }) {
     return {
       signup: state?.signup,
-      auth: state?.auth
-    }
-  });
+      users: state?.users,
+    };
+  }
+
+  const {
+    users: usersSelector, // users data
+    // signup
+  } = useSelector(selectors);
 
   const dispatch = useDispatch();
 
-  const authGetUsersProfil = () => dispatch(authGetUsersProfilAction());
-  const deleteUserAction = (id) => dispatch(authDeleteUserProfilAction(id));
-  const editUserAction = (params) => dispatch(authUpdateUserProfilAction(params));
-  const signupAction = (params) => dispatch(signupUserAction(params));
+  // const deleteUserAction = (id) => dispatch(authDeleteUserProfilAction(id));
 
-  const users = auth?.data || [];
+  const users = usersSelector?.data || [];
 
   useEffect(() => {
-    authGetUsersProfil();
+    dispatch(authGetUsersProfilAction());
   }, []);
 
-  const onDelete = useCallback((currentSource: any) => {
+  /* const onDelete = useCallback((currentSource: any) => {
     setNewUser(false);
     setEditingUser(false);
     setDeletingUser(currentSource);
   }, []);
+*/
 
-  const onClose = useCallback(() => {
-    setDeletingUser(false);
-    setEditingUser(false);
-    setNewUser(false);
-  }, []);
+  const onSubmit = useCallback((user: any) => {
+    if (user?.password) {
+      // create new user
+      console.log('onSubmit create new user', user);
+      // dispatch(signupUserAction(user));
+      // dispatch(authGetUsersProfilAction());
+      setIsOpenedSidebar(false);
+      return;
+    }
 
-  const onAdd = useCallback(() => {
-    setNewUser(true);
-    setEditingUser(false);
-    setDeletingUser(false);
+    //dispatch(authUpdateUserProfilAction(user));
+    // update existing user
+    console.log('onSubmit update existing user', user);
+
+    //editUserAction(user);
+    //authGetUsersProfil();
+    //onClose();
+    setIsOpenedSidebar(false);
+    setIsOpenedModal(false);
   }, []);
 
   const onEditUser = useCallback((user: any) => {
-    editUserAction(user);
-    authGetUsersProfil();
-    onClose();
-  }, []);
-
-  const onEdit = useCallback((user: any) => {
-    setEditingUser(user);
-    setNewUser(false);
-    setDeletingUser(false);
-  }, []);
-
-  const onNewUser = useCallback((user: any) => {
-    setNewUser(user);
-    signupAction(user);
-    authGetUsersProfil();
-    onClose();
+    //editUserAction(user);
+    //authGetUsersProfil();
+    //onClose();
   }, []);
 
   const onDeleteUser = useCallback((user: any) => {
-    deleteUserAction(user._id);
-    authGetUsersProfil();
-    onClose();
+    // deleteUserAction(user._id);
+    // authGetUsersProfil();
+    // onClose();
   }, []);
 
   const rows = useMemo(
     () =>
       users?.map((user: any) =>
-        userListItem({
-          id,
+        UserListItem({
           user,
-          onEdit,
-          onDelete,
+          onDelete: setIsOpenedModal,
+          onEdit: setIsOpenedSidebar,
           canDelete,
           canEdit,
-        })),
-    [id, onEdit, onDelete, canDelete, canEdit, editingUser, newUser, deletingUser, users?.length]);
-
-  console.log('users', users)
+        }),
+      ),
+    [canDelete, canEdit, users?.length],
+  );
 
   const header = useMemo(
     () => [
       { label: '', sortable: false },
-      { label: 'First name', sortable: false },
-      { label: 'Last name', sortable: false },
-      { label: 'Email', sortable: false },
-      { label: 'Created at', sortable: true, type: 'date' },
-      { label: 'Modified at', sortable: true, type: 'date' },
+      { label: t('field.firstName'), sortable: false },
+      { label: t('field.lastName'), sortable: false },
+      { label: t('field.email'), sortable: false },
+      { label: t('field.createdAt'), sortable: true, type: 'date' },
+      { label: t('field.updateAt'), sortable: true, type: 'date' },
     ],
-    []);
+    [t],
+  );
 
-  if (!users?.length && auth?.loading) return <TopLineLoading />;
+  console.log('isOpened', isOpenedSidebar);
 
-  return <>
-    <section className="py-5 text-center container">
-      <div className="row py-lg-5">
-        <div className="col-lg-6 col-md-8 mx-auto">
-          <h1 className="fw-light">{t("Welcome to React")}</h1>
-          <p className="lead text-muted">Something short and leading about the collection below—its
-            contents, the creator, etc. Make it short and sweet, but not too short so folks don’t
-            simply skip over it entirely.</p>
-          <p>
-            {canAdd && <button className="btn btn-primary my-2"  type="submit" onClick={onAdd}>Add user(s)</button>}
-          </p>
+  if (!users?.length && users?.loading) return <TopLineLoading />;
+
+  return (
+    <>
+      <section className="py-5 text-center container">
+        <div className="row py-lg-5">
+          <div className="col-lg-6 col-md-8 mx-auto">
+            <h1 className="fw-light">{t('Welcome to React')}</h1>
+            <button
+              className="btn btn-primary my-2 text-white"
+              type="submit"
+              onClick={setIsOpenedSidebar}>
+              Add user(s)
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {!users?.length && !auth.loading && <div>No data</div>}
+      {!users?.length && !users.loading && <div>No data</div>}
 
-    <TableWrapper id={id} header={header} rows={rows} />
+      <TableWrapper header={header} rows={rows} />
 
-    <SidebarWrapper
-      isOpened={editingUser}
-      setIsOpened={onClose}>
-      <UserEdit
-        data={editingUser}
-        onSubmit={onEditUser}
+      <SidebarWrapper
+        isOpened={isOpenedSidebar}
+        setIsOpened={setIsOpenedSidebar}>
+        {isOpenedSidebar?.id ? (
+          <UserEdit initialValues={isOpenedSidebar} onSubmit={onSubmit} />
+        ) : (
+          <UserNew onSubmit={onSubmit} />
+        )}
+      </SidebarWrapper>
+
+      <ModalWrapper
+        hide={setIsOpenedModal}
+        isShowing={isOpenedModal}
+        onConfirm={onSubmit}
       />
-    </SidebarWrapper>
-
-    <SidebarWrapper
-      isOpened={newUser}
-      setIsOpened={onClose}>
-      <UserNew onSubmit={onNewUser} />
-    </SidebarWrapper>
-
-    <ModalWrapper
-      hide={onClose}
-      isShowing={deletingUser}
-      onConfirm={() => onDeleteUser(deletingUser)}
-    />
-
-  </>;
+    </>
+  );
 }
 
 export default UserList;
