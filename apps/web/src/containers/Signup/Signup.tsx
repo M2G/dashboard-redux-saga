@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { signupUserAction } from '@/store/signup/actions';
+import { signupUserAction } from '@/store/auth/signup/actions';
 import { INITIAL_VALUES } from './constants';
 import SignupView from './Signup';
 
