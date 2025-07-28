@@ -11,9 +11,9 @@ const resources = {
       field: {
         createdAt: 'Created at',
         email: 'Email',
-        firstname: 'First name',
+        firstName: 'First name',
         password: 'Password',
-        lastname: 'Last name',
+        lastName: 'Last name',
         updateAt: 'Update at',
         newPassword: 'New password',
         verifyPassword: 'Verify password',
@@ -51,10 +51,12 @@ const resources = {
       field: {
         createdAt: 'Créé à',
         email: 'Email',
-        firstname: 'Prénom',
-        lastname: 'Nom de famille',
+        firstName: 'Prénom',
         password: 'Mot de passe',
+        lastName: 'Nom de famille',
         updateAt: 'Mise à jour à',
+        newPassword: 'Nouveau mot de passe',
+        verifyPassword: 'Vérifier le mot de passe',
       },
       form: {
         createAccount: 'Créer un compte',
