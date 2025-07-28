@@ -1,20 +1,18 @@
 import { JSX, useCallback } from 'react';
 import { useAuth } from '@/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { signinUserAction } from '@/store/signin/actions';
+import { signinUserAction } from '@/store/auth/signin/actions';
 import SigninForm from '@/components/SigninForm';
 import { INITIAL_VALUES } from './constants';
 
 function Signin(): JSX.Element {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { activateAuth } = useAuth();
 
-  useSelector(
-    (state): void => {
-      console.log('RENDER')
-      state?.signin?.data?.accessToken && activateAuth({ accessToken: state.signin.data.accessToken });
-    }
-  );
+  useSelector((state): void => {
+    state?.signin?.data?.accessToken &&
+     activateAuth({ accessToken: state.signin.data.accessToken });
+  });
 
   const onSubmit = useCallback(
     (e: { email: string; password: string }): void => {
