@@ -1,10 +1,12 @@
-import { clearAuthStorage, getAuthStorage } from '@/services/storage';
 import { Reducer } from 'redux';
+
+import {
+  getAccessTokenStorage, clearAccessTokenStorage } from '@/services/storage';
 import { AuthActionTypes, AuthGlobalState } from './types';
 
 // Type-safe initialState!
 export const initialState: AuthGlobalState = {
-  isAuthenticated: !!getAuthStorage(),
+  isAuthenticated: !!getAccessTokenStorage(),
 };
 
 const reducer: Reducer<AuthGlobalState> = (state = initialState, action) => {
@@ -15,7 +17,7 @@ const reducer: Reducer<AuthGlobalState> = (state = initialState, action) => {
     case AuthActionTypes.SIGNUP_SUCCESS_GLOBAL:
       return { ...state, isAuthenticated: true };
     case AuthActionTypes.SIGNOUT_SUCCESS_GLOBAL:
-      clearAuthStorage();
+      clearAccessTokenStorage();
       return { ...state, isAuthenticated: false };
     default:
       return state;
