@@ -1,6 +1,6 @@
 import { AuthContext } from '@/AuthContext';
 import ProfilForm from '@/components/ProfilForm';
-import { authGetUserProfilAction, authUpdateUserProfilAction } from '@/store/auth/actions';
+import { authGetUserProfilAction, authUpdateUserProfilAction } from '@/store/users/actions';
 import { useCallback, useContext, useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 
