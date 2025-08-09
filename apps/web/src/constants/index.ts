@@ -1,7 +1,11 @@
-import { getAccessTokenStorage } from 'services/storage';
 import ROUTER_PATH from './RouterPath';
+import { KEY_AUTH_STORAGE } from '@/store2/authStore';
 
-const authData = getAccessTokenStorage();
+const state = JSON.parse(
+  localStorage.getItem('auth-store')?.state as string || '{}',
+);
+
+const authData = state?.data?.accessToken;
 
 // const token = authData ? JSON.parse(authData).auth_token : '';
 
