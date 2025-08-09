@@ -1,6 +1,5 @@
 const ROUTER_PATH = {
   CHANGE_PASSWORD: '/change-password',
-  DASHBOARD: '/dashboard',
   FORGOT_PASSWORD: '/forgot-password',
   HOME: '/',
   LOGIN: '/login',
