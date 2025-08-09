@@ -1,12 +1,5 @@
 import { useMemo, useState, useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { signupUserAction } from '@/store/auth/signup/actions';
-import {
-  authGetUsersProfilAction,
-  authDeleteUserProfilAction,
-  authUpdateUserProfilAction,
-} from '@/store/users/actions';
 import TableWrapper from '@/components/Core/Table/TableWrapper';
 import {
   Sidebar as SidebarWrapper,
@@ -16,35 +9,35 @@ import TopLineLoading from '@/components/Loading/TopLineLoading';
 import UserListItem from './UserListItem';
 import UserEdit from '@/components/Users/UserEdit';
 import UserNew from '@/components/Users/UserNew';
+import { useUserStore } from '@/store2';
 
 function UserList({ canEdit = false, canDelete = false }) {
   const { t } = useTranslation();
+  const {
+    data,
+    loading,
+    error,
+    get,
+    create,
+    update,
+    delete: deleteUser
+  } = useUserStore((state) => state);
   const [isOpenedSidebar, setIsOpenedSidebar] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
 
-  console.log('isOpenedModal', isOpenedModal);
+  const users = data?.results;
 
-  function selectors(state: { signup: any[]; users: any[] }) {
-    return {
-      signup: state?.signup,
-      users: state?.users,
-    };
-  }
-
-  const {
-    users: usersSelector, // users data
-    // signup
-  } = useSelector(selectors);
-
-  const dispatch = useDispatch();
-
-  // const deleteUserAction = (id) => dispatch(authDeleteUserProfilAction(id));
-
-  const users = usersSelector?.data || [];
-
-  useEffect(() => {
-    dispatch(authGetUsersProfilAction());
+  useEffect(function(): void {
+      get(
+        { filters: '', page: 1, pageSize: 10 },
+      );
   }, []);
+
+  console.log('----------', {
+    data,
+    loading,
+    error,
+  })
 
   /* const onDelete = useCallback((currentSource: any) => {
     setNewUser(false);
@@ -53,42 +46,31 @@ function UserList({ canEdit = false, canDelete = false }) {
   }, []);
 */
 
-  const onSubmit = useCallback((user: any) => {
+  const onSubmit = useCallback(async (user: any) => {
     if (user?.password) {
       // create new user
-      console.log('onSubmit create new user', user);
-      // dispatch(signupUserAction(user));
-      // dispatch(authGetUsersProfilAction());
+      create(user);
+      get({ filters: '', page: 1, pageSize: 10 });
       setIsOpenedSidebar(false);
       return;
     }
 
-    //dispatch(authUpdateUserProfilAction(user));
     // update existing user
-    console.log('onSubmit update existing user', user);
-
-    //editUserAction(user);
-    //authGetUsersProfil();
-    //onClose();
+    update({ ...user, id: isOpenedSidebar.id });
+    get({ filters: '', page: 1, pageSize: 10 });
     setIsOpenedSidebar(false);
+
+  }, [isOpenedSidebar?.id]);
+
+  const onSubmit2 = useCallback(() => {
+    deleteUser(isOpenedModal.id);
+    get({ filters: '', page: 1, pageSize: 10 });
     setIsOpenedModal(false);
-  }, []);
-
-  const onEditUser = useCallback((user: any) => {
-    //editUserAction(user);
-    //authGetUsersProfil();
-    //onClose();
-  }, []);
-
-  const onDeleteUser = useCallback((user: any) => {
-    // deleteUserAction(user._id);
-    // authGetUsersProfil();
-    // onClose();
-  }, []);
+  }, [isOpenedModal.id]);
 
   const rows = useMemo(
     () =>
-      users?.map((user: any) =>
+      users?.map((user) =>
         UserListItem({
           user,
           onDelete: setIsOpenedModal,
@@ -112,8 +94,6 @@ function UserList({ canEdit = false, canDelete = false }) {
     [t],
   );
 
-  console.log('isOpened', isOpenedSidebar);
-
   if (!users?.length && users?.loading) return <TopLineLoading />;
 
   return (
@@ -123,7 +103,7 @@ function UserList({ canEdit = false, canDelete = false }) {
           <div className="col-lg-6 col-md-8 mx-auto">
             <h1 className="fw-light">{t('Welcome to React')}</h1>
             <button
-              className="btn btn-primary my-2 text-white"
+              className="btn btn-primary my-2 text-black"
               type="submit"
               onClick={setIsOpenedSidebar}>
               Add user(s)
@@ -132,7 +112,7 @@ function UserList({ canEdit = false, canDelete = false }) {
         </div>
       </section>
 
-      {!users?.length && !users.loading && <div>No data</div>}
+      {!users?.length && !users?.loading && <div>No data</div>}
 
       <TableWrapper header={header} rows={rows} />
 
@@ -149,7 +129,7 @@ function UserList({ canEdit = false, canDelete = false }) {
       <ModalWrapper
         hide={setIsOpenedModal}
         isShowing={isOpenedModal}
-        onConfirm={onSubmit}
+        onConfirm={onSubmit2}
       />
     </>
   );
