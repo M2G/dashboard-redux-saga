@@ -27,6 +27,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
   } = useForm<FormSchemaType>({
     defaultValues: useMemo(
       () => ({
@@ -50,15 +51,15 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
           label={LABEL_EMAIL}
           name={INPUT_NAME.EMAIL}
           type="email"
-          {...{ errors, register }}
+          {...{ errors, register, control }}
           required
         />
         <Field
           className="_:mb-2"
           label={LABEL_PASSWORD}
           name={INPUT_NAME.PASSWORD}
-          type="email"
-          {...{ errors, register }}
+          type="password"
+          {...{ errors, register, control }}
           required
         />
         <Button className="w-full" disabled={!isValid} type="submit" variant="primary">
