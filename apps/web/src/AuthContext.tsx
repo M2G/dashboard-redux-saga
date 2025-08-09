@@ -1,7 +1,15 @@
 import type { Context, JSX, ReactNode } from 'react';
 
-import { createContext, useContext, useMemo, useState, useLayoutEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useLayoutEffect,
+} from 'react';
 import { jwtDecode } from 'jwt-decode';
+import { KEY_AUTH_STORAGE } from '@/store2/authStore';
+
 import {
   clearAccessTokenStorage,
   clearRefreshTokenStorage,
@@ -13,8 +21,12 @@ import {
   setUserStorage,
 } from '@/services/storage';
 
+
 type AuthContextType = {
-  activateAuth: (token: { accessToken?: string; refreshToken?: string }) => void;
+  activateAuth: (token: {
+    accessToken?: string;
+    refreshToken?: string;
+  }) => void;
   isAuth: boolean | null | string;
   removeAuth: () => void;
   userData: {
@@ -43,32 +55,40 @@ interface AuthContextProps {
 }
 // export a provider
 function Provider({ children }: AuthContextProps): JSX.Element {
+  const AUTH_STORAGE = localStorage.getItem(KEY_AUTH_STORAGE);
+  const state = AUTH_STORAGE && JSON.parse(AUTH_STORAGE as string)?.state;
 
-  const [isAuth, setIsAuth] = useState<boolean | null | string>(() =>
-    getAccessTokenStorage(),
+  console.log('state', state);
+
+  console.log('getUserStorage()', getUserStorage());
+
+  const [isAuth, setIsAuth] = useState<boolean | null | string>(
+    () => state?.data?.accessToken,
   );
 
-  const [userData, setUserData] = useState<boolean | null | string>(() =>
-    getUserStorage(),
-  );
+  const [userData, setUserData] = useState<boolean | null | string>(
+    () => getUserStorage());
 
   const value = {
-    activateAuth(auth: { accessToken: string; refreshToken: string }) {
+    activateAuth(auth?: { accessToken: string; refreshToken: string }) {
       console.log('activateAuth', auth);
 
       const decodedToken: {
         email: string;
         id: number;
-      } = jwtDecode(auth.accessToken) || {};
+      } = jwtDecode(auth?.accessToken as string) || {};
 
       const user = {
         email: decodedToken.email,
         id: decodedToken.id,
       };
+
+      console.log('activateAuth user', user);
+
       setUserStorage(JSON.stringify(user));
       setUserData(JSON.stringify(user));
-      setAccessTokenStorage(auth.accessToken);
-      setRefreshTokenStorage(auth.refreshToken);
+      //setAccessTokenStorage(auth.accessToken);
+      //setRefreshTokenStorage(auth.refreshToken);
       setIsAuth(true);
     },
     isAuth,
@@ -76,8 +96,8 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       setIsAuth(false);
       setUserStorage(null);
       clearUserStorage();
-      clearRefreshTokenStorage();
-      clearAccessTokenStorage();
+      //clearRefreshTokenStorage();
+      //clearAccessTokenStorage();
     },
     userData: userData ? JSON.parse(userData as string) : null,
   };
