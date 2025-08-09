@@ -1,4 +1,4 @@
-import { getAccessTokenStorage } from 'services/storage';
+/*import { getAccessTokenStorage } from 'services/storage';
 import ROUTER_PATH from './RouterPath';
 
 const authData = getAccessTokenStorage();
@@ -13,3 +13,4 @@ export default {
   },
   ROUTER_PATH,
 };
+*/
