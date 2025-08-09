@@ -33,6 +33,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
   } = useForm<FormSchemaType>({
     defaultValues: useMemo(
       () => ({
@@ -40,7 +41,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
       }),
       [initialValues],
     ),
-    mode: 'onSubmit',
+    mode: 'onBlur',
     resolver: zodResolver(formSchema),
   });
 
@@ -61,7 +62,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
           className="_:mb-2"
           label={t('field.email')}
           name={INPUT_NAME.EMAIL}
-          {...{ errors, register }}
+          {...{ errors, register, control }}
           required
           type="email"
         />
@@ -69,7 +70,7 @@ function SigninForm({ initialValues, onSubmit }: IForm): JSX.Element {
           className="_:mb-2"
           label={t('field.password')}
           name={INPUT_NAME.PASSWORD}
-          {...{ errors, register }}
+          {...{ errors, register, control }}
           required
           type="password"
         />
