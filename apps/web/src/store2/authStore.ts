@@ -1,14 +1,8 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-export const AUTH_LOGIN = '/auth/authenticate';
-
-// ARTICLE API
-export const CREATE_USER = '/users/register';
-export const GET_ARTICLES = '/api/posts';
-export const DELETE_ARTICLE = '/api/posts/:id';
-export const CREATE_ARTICLE = '/api/posts';
-export const UPDATE_ARTICLE = '/api/posts/:id';
+export const AUTH_SIGNIN = '/auth/authenticate';
+export const AUTH_SIGNUP = '/users/register';
 
 export const KEY_AUTH_STORAGE = 'auth-store';
 
@@ -45,7 +39,7 @@ const useAuthStore = create<Store>()(
       login: async ({ email, password }: IAuthState) => {
         try {
           set(() => ({ loading: true }));
-          const response = await api.post(AUTH_LOGIN, { email, password });
+          const response = await api.post(AUTH_SIGNIN, { email, password });
 
           set((state) => ({
             ...state,
@@ -70,7 +64,7 @@ const useAuthStore = create<Store>()(
       register: async ({ email, password }: IAuthState) => {
         try {
           set(() => ({ loading: true }));
-          const response = await api.post(CREATE_USER, { email, password });
+          const response = await api.post(AUTH_SIGNUP, { email, password });
 
           set((state) => ({ ...state, error: '', data: response.data }));
 
