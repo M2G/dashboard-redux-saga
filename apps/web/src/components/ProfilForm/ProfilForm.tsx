@@ -31,6 +31,7 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
     formState: { errors, isValid },
     handleSubmit,
     register,
+    control,
   } = useForm<FormSchemaType>({
     defaultValues: useMemo(
       () => ({
@@ -42,7 +43,7 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
     resolver: zodResolver(formSchema),
   });
 
-  console.log('isValid', isValid);
+  console.log('initialValues', initialValues);
 
   return (
     <div
@@ -57,7 +58,8 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           label={LABEL_FIRST_NAME}
           name={INPUT_NAME.FIRST_NAME}
           type="text"
-          {...{ errors, register }}
+          {...{ errors, register, control }}
+          defaultValue={initialValues.firstName || ''}
           required
         />
         <Field
@@ -65,7 +67,8 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           label={LABEL_LAST_NAME}
           name={INPUT_NAME.LAST_NAME}
           type="text"
-          {...{ errors, register }}
+          {...{ errors, register, control }}
+          defaultValue={initialValues.last_name || ''}
           required
         />
         <Field
@@ -73,7 +76,8 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           label={LABEL_EMAIL}
           name={INPUT_NAME.EMAIL}
           type="email"
-          {...{ errors, register }}
+          {...{ errors, register, control }}
+          defaultValue={initialValues.email || ''}
           required
         />
         <Button className="w-full" disabled={!isValid} type="submit" variant="primary">
