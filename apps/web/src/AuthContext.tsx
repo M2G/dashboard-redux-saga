@@ -58,10 +58,6 @@ function Provider({ children }: AuthContextProps): JSX.Element {
   const AUTH_STORAGE = localStorage.getItem(KEY_AUTH_STORAGE);
   const state = AUTH_STORAGE && JSON.parse(AUTH_STORAGE as string)?.state;
 
-  console.log('state', state);
-
-  console.log('getUserStorage()', getUserStorage());
-
   const [isAuth, setIsAuth] = useState<boolean | null | string>(
     () => state?.data?.accessToken,
   );
@@ -71,8 +67,6 @@ function Provider({ children }: AuthContextProps): JSX.Element {
 
   const value = {
     activateAuth(auth?: { accessToken: string; refreshToken: string }) {
-      console.log('activateAuth', auth);
-
       const decodedToken: {
         email: string;
         id: number;
@@ -82,8 +76,6 @@ function Provider({ children }: AuthContextProps): JSX.Element {
         email: decodedToken.email,
         id: decodedToken.id,
       };
-
-      console.log('activateAuth user', user);
 
       setUserStorage(JSON.stringify(user));
       setUserData(JSON.stringify(user));
