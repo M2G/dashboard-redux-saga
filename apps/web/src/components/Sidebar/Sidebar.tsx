@@ -14,14 +14,14 @@ function Sidebar(): JSX.Element {
           Ici Logo
         </h3>
         <ul className="nav flex flex-col justify-center pt-4">
-          <li className="mb-5 flex items-center">
+          <li className="mb-5 flex stroke-white">
             <Icon
               as={IconNames.HOME}
               className="_:stroke-white  _:h-5 _:w-10 _:min-h-6"
             />
             <a
               aria-current="page"
-              className="ml-2 font-medium text-[\_em(16px)]"
+              className="ml-2 font-medium text-[color:var(--color-text)]"
               href={ROUTER_PATH.HOME}>
               {t('navbar.home')}
             </a>
