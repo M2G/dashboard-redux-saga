@@ -1,35 +1,33 @@
 import { AuthContext } from '@/AuthContext';
 import ProfilForm from '@/components/ProfilForm';
-import { authGetUserProfilAction, authUpdateUserProfilAction } from '@/store/users/actions';
 import { useCallback, useContext, useEffect } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useUserStore } from '@/store2';
+import TopLineLoading from '@/components/Loading/TopLineLoading';
 
 function Profil(): JSX.Element | null {
   const { userData }: { userData: { id: number } } = useContext(AuthContext);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(authGetUserProfilAction({ id: userData?.id }));
-  }, [dispatch, userData]);
+  const {
+    data,
+    loading,
+    error,
+    getOne,
+    update
+  } = useUserStore((state) => state);
 
-  const { auth: { data: { data } } = {} } = useSelector(({ auth }) => ({
-    auth,
-  }));
+  useEffect(() => {
+    getOne(userData?.id);
+  }, [userData?.id]);
 
   const handleSubmit = useCallback(
     (data) => {
-      dispatch(authUpdateUserProfilAction({ ...data, id: userData?.id }));
+      update({ ...data, id: userData?.id });
     },
-    [dispatch, userData?.id],
+    [userData?.id],
   );
 
-  return data && <ProfilForm initialValues={{ ...data }} onSubmit={handleSubmit} />;
+  if (!data?.length && loading) return <TopLineLoading />;
+
+  return <ProfilForm initialValues={{ ...data }} onSubmit={handleSubmit} />;
 }
 
-const mapStateToProps = (state: { auth: { data: never; loading: boolean } }) => {
-  return {
-    auth: state.auth.data,
-    loading: state.auth.loading,
-  };
-};
-
-export default connect(mapStateToProps)(Profil);
+export default Profil;
