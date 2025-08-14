@@ -24,9 +24,6 @@ function Router(): JSX.Element {
   const { isAuth, userData } = useContext(AuthContext) as Auth;
   const userId = userData?.id;
 
-  console.log("userId:", userId);
-  console.log("isAuth:", isAuth);
-
   return (
     <main>
       <Suspense fallback={<TopLineLoading />}>
