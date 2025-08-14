@@ -11,7 +11,7 @@ import UserEdit from '@/components/Users/UserEdit';
 import UserNew from '@/components/Users/UserNew';
 import { useUserStore } from '@/store2';
 
-function UserList({ canEdit = false, canDelete = false }) {
+function UserList({ canEdit = false, canDelete = false }): Element {
   const { t } = useTranslation();
   const {
     data,
@@ -20,47 +20,34 @@ function UserList({ canEdit = false, canDelete = false }) {
     get,
     create,
     update,
-    delete: deleteUser
+    delete: deleteUser,
   } = useUserStore((state) => state);
   const [isOpenedSidebar, setIsOpenedSidebar] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
 
   const users = data?.results;
 
-  useEffect(function(): void {
-      get(
-        { filters: '', page: 1, pageSize: 10 },
-      );
+  useEffect(function (): void {
+    get({ filters: '', page: 1, pageSize: 10 });
   }, []);
 
-  console.log('----------', {
-    data,
-    loading,
-    error,
-  })
+  const onSubmit = useCallback(
+    async (user: any) => {
+      if (user?.password) {
+        // create new user
+        create(user);
+        get({ filters: '', page: 1, pageSize: 10 });
+        setIsOpenedSidebar(false);
+        return;
+      }
 
-  /* const onDelete = useCallback((currentSource: any) => {
-    setNewUser(false);
-    setEditingUser(false);
-    setDeletingUser(currentSource);
-  }, []);
-*/
-
-  const onSubmit = useCallback(async (user: any) => {
-    if (user?.password) {
-      // create new user
-      create(user);
+      // update existing user
+      update({ ...user, id: isOpenedSidebar.id });
       get({ filters: '', page: 1, pageSize: 10 });
       setIsOpenedSidebar(false);
-      return;
-    }
-
-    // update existing user
-    update({ ...user, id: isOpenedSidebar.id });
-    get({ filters: '', page: 1, pageSize: 10 });
-    setIsOpenedSidebar(false);
-
-  }, [isOpenedSidebar?.id]);
+    },
+    [isOpenedSidebar?.id],
+  );
 
   const onSubmit2 = useCallback(() => {
     deleteUser(isOpenedModal.id);
