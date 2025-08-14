@@ -61,10 +61,10 @@ const useAuthStore = create<Store>()(
           }));
         }
       },
-      register: async ({ email, password }: IAuthState) => {
+      register: async (params: IAuthState) => {
         try {
           set(() => ({ loading: true }));
-          const response = await api.post(AUTH_SIGNUP, { email, password });
+          const response = await api.post(AUTH_SIGNUP, params);
 
           set((state) => ({ ...state, error: '', data: response.data }));
 

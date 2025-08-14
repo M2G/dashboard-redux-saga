@@ -18,7 +18,7 @@ type AppState = {};
 
 type Actions = {
   get: (userParam: IUserState) => { data: { accessToken: string } } | undefined;
-  getOne: (id: string) => { data: any } | undefined;
+  getOne: (id: string) => { data: any[] } | undefined;
   create: (authParam: IUserState) => { data: boolean } | undefined;
   update: (authParam: IUserState) => { data: boolean } | undefined;
   delete: (id: string) => { data: boolean } | undefined;
@@ -34,7 +34,11 @@ const initialState: AppState = {
 
 function createActions(set: SetState<Store>) {
   return {
-    get: async ({ filters = '', page = 1, pageSize = 10 }: IUserState): Promise<{data:any}> => {
+    get: async ({
+      filters = '',
+      page = 1,
+      pageSize = 10,
+    }: IUserState): Promise<{ data: any }> => {
       try {
         set(() => ({ loading: true }));
         const response = await api.get(
@@ -67,7 +71,14 @@ function createActions(set: SetState<Store>) {
     getOne: async (id: string) => {
       try {
         set(() => ({ loading: true }));
-        const response = await api.get(`/${USER_GET}/${id}`);
+        const response = await api.get(`${USER_GET}/${id}`);
+
+        set((state) => ({
+          ...state,
+          error: '',
+          data: response.data,
+        }));
+
         return { data: response.data };
       } catch (err) {
         set((state) => ({
@@ -101,10 +112,7 @@ function createActions(set: SetState<Store>) {
     update: async ({ id, ...args }: IUserState) => {
       try {
         set(() => ({ loading: true }));
-        const response = await api.put(
-          `${USER_GET}/${id}`,
-          args,
-        );
+        const response = await api.put(`${USER_GET}/${id}`, args);
         return { data: response.data };
       } catch (err) {
         set((state) => ({
@@ -118,11 +126,65 @@ function createActions(set: SetState<Store>) {
         }));
       }
     },
-    delete: async (id: string): Promise<{data:boolean}> => {
+    delete: async (id: string): Promise<{ data: boolean }> => {
       try {
         set(() => ({ loading: true }));
         const response = await api.delete(`${USER_GET}/${id}`);
         return { data: response.data };
+      } catch (err) {
+        set((state) => ({
+          ...state,
+          error: err.message,
+        }));
+      } finally {
+        set((state) => ({
+          ...state,
+          loading: false,
+        }));
+      }
+    },
+    changePassword: async ({}): Promise<{ data: boolean }> => {
+      try {
+        set(() => ({ loading: true }));
+        // Implement the change password logic here
+        // const response = await api.post(`${USER_GET}/change-password`, params);
+        return { data: true }; // Replace with actual response
+      } catch (err) {
+        set((state) => ({
+          ...state,
+          error: err.message,
+        }));
+      } finally {
+        set((state) => ({
+          ...state,
+          loading: false,
+        }));
+      }
+    },
+    resetPassword: async ({}): Promise<{ data: boolean }> => {
+      try {
+        set(() => ({ loading: true }));
+        // Implement the reset password logic here
+        // const response = await api.post(`${USER_GET}/reset-password`, params);
+        return { data: true }; // Replace with actual response
+      } catch (err) {
+        set((state) => ({
+          ...state,
+          error: err.message,
+        }));
+      } finally {
+        set((state) => ({
+          ...state,
+          loading: false,
+        }));
+      }
+    },
+    forgotPassword: async ({}): Promise<{ data: boolean }> => {
+      try {
+        set(() => ({ loading: true }));
+        // Implement the forgot password logic here
+        // const response = await api.post(`${USER_GET}/forgot-password`, params);
+        return { data: true }; // Replace with actual response
       } catch (err) {
         set((state) => ({
           ...state,
