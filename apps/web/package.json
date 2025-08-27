@@ -43,7 +43,6 @@
     "jest-environment-jsdom": "^30.0.5",
     "jest-resolve": "30.0.5",
     "jest-watch-typeahead": "^3.0.1",
-    "jwt-decode": "^4.0.0",
     "lint-staged": "^16.1.2",
     "lodash": "^4.17.21",
     "postcss": "^8.5.6",
