@@ -1,15 +1,10 @@
 import type { Context, JSX, ReactNode } from 'react';
-
 import {
   createContext,
   useContext,
   useMemo,
   useState,
-  useLayoutEffect,
 } from 'react';
-import { jwtDecode } from 'jwt-decode';
-import { KEY_AUTH_STORAGE } from '@/store2/authStore';
-
 import {
   clearAccessTokenStorage,
   clearRefreshTokenStorage,
@@ -19,8 +14,8 @@ import {
   setAccessTokenStorage,
   setRefreshTokenStorage,
   setUserStorage,
+  getAuthStorage
 } from '@/services/storage';
-
 
 type AuthContextType = {
   activateAuth: (token: {
@@ -55,22 +50,13 @@ interface AuthContextProps {
 }
 // export a provider
 function Provider({ children }: AuthContextProps): JSX.Element {
-  const AUTH_STORAGE = localStorage.getItem(KEY_AUTH_STORAGE);
-  const state = AUTH_STORAGE && JSON.parse(AUTH_STORAGE as string)?.state;
-
   const [isAuth, setIsAuth] = useState<boolean | null | string>(
-    () => state?.data?.accessToken,
+    () => !!getUserStorage(),
   );
-
-  const [userData, setUserData] = useState<boolean | null | string>(
-    () => getUserStorage());
 
   const value = {
     activateAuth(auth?: { accessToken: string; refreshToken: string }) {
-      const decodedToken: {
-        email: string;
-        id: number;
-      } = jwtDecode(auth?.accessToken as string) || {};
+      const decodedToken = JSON.parse(atob(auth?.accessToken?.split('.')?.[1] as string)) || {};
 
       const user = {
         email: decodedToken.email,
@@ -78,7 +64,6 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       };
 
       setUserStorage(JSON.stringify(user));
-      setUserData(JSON.stringify(user));
       //setAccessTokenStorage(auth.accessToken);
       //setRefreshTokenStorage(auth.refreshToken);
       setIsAuth(true);
@@ -91,7 +76,6 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       //clearRefreshTokenStorage();
       //clearAccessTokenStorage();
     },
-    userData: userData ? JSON.parse(userData as string) : null,
   };
 
   const authValue = useMemo(() => value, [value]);
