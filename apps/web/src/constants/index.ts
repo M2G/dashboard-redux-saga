@@ -1,15 +1,11 @@
 import ROUTER_PATH from './RouterPath';
-import { KEY_AUTH_STORAGE } from '@/store2/authStore';
+import { getAuthStorage } from '@/services/storage';
 
-const state = JSON.parse(
-  localStorage.getItem('auth-store')?.state as string || '{}',
-);
+const state = JSON.parse(getAuthStorage() as string)?.state;
 
 const authData = state?.data?.accessToken;
 
-// const token = authData ? JSON.parse(authData).auth_token : '';
-
-const token = authData ?? '';
+const token = authData || '';
 
 export default {
   GLOBAL_VAR: {
