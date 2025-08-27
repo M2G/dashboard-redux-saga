@@ -11,7 +11,7 @@ import UserEdit from '@/components/Users/UserEdit';
 import UserNew from '@/components/Users/UserNew';
 import { useUserStore } from '@/store2';
 
-function UserList({ canEdit = false, canDelete = false }): Element {
+function UserList({ canEdit = false, canDelete = false }): JSX.Element {
   const { t } = useTranslation();
   const {
     data,
