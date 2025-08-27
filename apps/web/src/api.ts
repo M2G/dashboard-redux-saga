@@ -3,6 +3,11 @@ import { toast } from 'react-toastify';
 
 import Config from './constants';
 
+import {
+  clearAuthStorage, clearUserStorage,
+} from '@/services/storage';
+import ROUTER_PATH from '@/constants/RouterPath';
+
 const api = axios.create({
   // base URL is read from the "constructor"
   baseURL: 'http://localhost:8181',
@@ -18,7 +23,10 @@ const api = axios.create({
     function (data, headers) {
       // Do whatever you want to transform the data
       const { token } = Config.GLOBAL_VAR;
-      if (token && headers) {
+
+      console.log("token", Config.GLOBAL_VAR)
+
+      if (headers && token) {
         headers.Authorization = `Bearer ${token}`;
       }
 
@@ -28,32 +36,18 @@ const api = axios.create({
   ],
 });
 
-/*
-api.addAsyncRequestTransform((request) => async () => {
-  const { token } = Config.GLOBAL_VAR;
-  if (token) {
-    request.headers['Authorization'] = `Bearer ${token}`;
-  }
-});
 
-});
-*/
-
-const myInterceptor = api.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   (error) => {
-    /*
-     * @see https://github.com/axios/axios#interceptors
-     * https://github.com/axios/axios/issues/2321
-     * https://stackoverflow.com/questions/57251719/acquiring-a-new-token-with-axios-interceptors
-     * https://stackoverflow.com/questions/51646853/automating-access-token-refreshing-via-interceptors-in-axios
-     */
+    if (error?.status === 401) {
+      clearAuthStorage();
+      clearUserStorage();
+      window.location.href = ROUTER_PATH.LOGIN;
+    }
+
     toast.error(`${error?.message} : ${error?.response.data.error}`);
 
-    api.interceptors.response.eject(myInterceptor);
-    (import.meta as any).env.MODE === 'development'
-      ? console.error(JSON.stringify(error?.response))
-      : '';
     return Promise.reject(error);
   },
 );
