@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router';
 import { AuthContext } from '@/AuthContext';
 import TopLineLoading from '@/components/Loading/TopLineLoading';
 
-
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 
@@ -17,18 +16,16 @@ import PublicRoutes from './PublicRoutes';
 
 interface Auth {
   isAuth: boolean;
-  userData: { id: number };
 }
 
 function Router(): JSX.Element {
-  const { isAuth, userData } = useContext(AuthContext) as Auth;
-  const userId = userData?.id;
+  const { isAuth } = useContext(AuthContext) as Auth;
 
   return (
     <main>
       <Suspense fallback={<TopLineLoading />}>
         <Routes>
-          {isAuth && userId ? (
+          {isAuth ? (
             <Route element={<PrivateRoutes />} path="/*" />
           ) : (
             <Route element={<PublicRoutes />} path="/*" />
