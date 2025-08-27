@@ -7,6 +7,7 @@ export const AUTH_SIGNUP = '/users/register';
 export const KEY_AUTH_STORAGE = 'auth-store';
 
 import api from '@/api';
+import { clearAuthStorage } from '@/services/storage';
 
 interface IAuthState {
   email: string;
@@ -84,7 +85,7 @@ const useAuthStore = create<Store>()(
       logout: () => {
         set(() => ({}));
         // sessionStorage.clear(); // or localStorage.clear();
-        localStorage.removeItem(KEY_AUTH_STORAGE);
+        clearAuthStorage();
       },
     }),
     {
