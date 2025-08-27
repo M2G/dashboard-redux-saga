@@ -98,7 +98,7 @@ function createActions(set: SetState<Store>) {
         const response = await api.post(USER_SIGNUP, authParam);
         return { data: response.data };
       } catch (err) {
-        set((state) => ({
+        set((state: any) => ({
           ...state,
           error: err.message,
         }));
@@ -179,12 +179,12 @@ function createActions(set: SetState<Store>) {
         }));
       }
     },
-    forgotPassword: async ({}): Promise<{ data: boolean }> => {
+    forgotPassword: async (params): Promise<{ data: boolean }> => {
       try {
         set(() => ({ loading: true }));
         // Implement the forgot password logic here
-        // const response = await api.post(`${USER_GET}/forgot-password`, params);
-        return { data: true }; // Replace with actual response
+        const response = await api.post(`${USER_GET}/forgot-password`, params);
+        return { data: true };
       } catch (err) {
         set((state) => ({
           ...state,
