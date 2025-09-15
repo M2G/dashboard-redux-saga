@@ -3,8 +3,8 @@ import { z } from 'zod';
 export const INPUT_NAME = {
   EMAIL: 'email',
   PASSWORD: 'password',
-  FIRST_NAME: 'first_name',
-  LAST_NAME: 'last_name',
+  FIRST_NAME: 'firstName',
+  LAST_NAME: 'lastName',
 };
 
 export const INITIAL_VALUES = {
