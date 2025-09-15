@@ -1,7 +1,6 @@
 const STORAGE_KEY_ACCESS_TOKEN = 'accessToken';
 const STORAGE_KEY_REFRESH_TOKEN = 'refreshToken';
 const STORAGE_KEY_USER = 'user';
-const KEY_AUTH_STORAGE = 'auth-store';
 
 function setAccessTokenStorage(authData: string) {
   localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, authData);
