@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 import Config from './constants';
 
 import {
-  clearAuthStorage, clearUserStorage,
-} from '@/services/storage';
-import ROUTER_PATH from '@/constants/RouterPath';
+  clearUserStorage,
+} from '@/storage/storage';
+import ROUTER_PATH from '@/constants/constants';
 
 const api = axios.create({
   // base URL is read from the "constructor"
@@ -41,7 +41,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error?.status === 401) {
-      clearAuthStorage();
       clearUserStorage();
       window.location.href = ROUTER_PATH.LOGIN;
     }
