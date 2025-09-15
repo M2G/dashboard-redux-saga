@@ -5,7 +5,7 @@ import { rootReducer, rootSaga, ApplicationState } from './store';
 
 const composeEnhancers = compose;
 
-const configureStore = (initialState: ApplicationState) => {
+function configureStore(initialState: ApplicationState){
   const sagaMiddleware = createSagaMiddleware();
 
   return {
@@ -16,6 +16,6 @@ const configureStore = (initialState: ApplicationState) => {
     ),
     runSaga: sagaMiddleware.run(rootSaga),
   };
-};
+}
 
 export default configureStore;
