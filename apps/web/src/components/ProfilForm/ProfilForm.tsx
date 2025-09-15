@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
