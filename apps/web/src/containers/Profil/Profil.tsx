@@ -13,7 +13,7 @@ function Profil(): JSX.Element | null {
     dispatch(authGetUserProfilAction({ id: isAuth?.id }));
   }, [isAuth?.id]);
 
-  const { users, loading } = useSelector((state) => (state.users));
+  const { data, loading } = useSelector((state) => (state.users));
 
   const handleSubmit = useCallback(
     (data) => {
@@ -24,7 +24,7 @@ function Profil(): JSX.Element | null {
 
   if (loading) return <TopLineLoading />;
 
-  return <ProfilForm initialValues={users.data} onSubmit={handleSubmit} />;
+  return <ProfilForm initialValues={data} onSubmit={handleSubmit} />;
 }
 
 export default Profil;
