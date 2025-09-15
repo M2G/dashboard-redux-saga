@@ -17,10 +17,8 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
-    '/^sentry\\/(.*)$/': '<rootDir>/src/sentry/$1',
-    '/^exceptions\\/(.*)$/': '<rootDir>/src/exceptions/$1',
-    '/^services\\/(.*)$/': '<rootDir>/src/services/$1',
-    '/^gql\\/(.*)$/': '<rootDir>/src/gql/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '@/^api\\/(.*)$/': '<rootDir>/src/api/$1',
     '/^modules\\/(.*)$/': '<rootDir>/src/modules/$1',
     '/^components\\/(.*)$/': '<rootDir>/src/components/$1',
     '/^containers\\/(.*)$/': '<rootDir>/src/containers/$1',
@@ -29,7 +27,7 @@ module.exports = {
   preset: 'ts-jest',
   resetMocks: true,
   roots: ['<rootDir>/src'],
-  setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
+  //setupFilesAfterEnv: ['<rootDir>/config/jest/setupTests.js'],
   testEnvironment: 'jsdom',
   testMatch: ['**/__tests__/**/*.(js|ts|tsx)', '**/?(*.)+(spec|test).(js|ts|tsx)'],
   transform: {
@@ -42,7 +40,7 @@ module.exports = {
       },
     ],
     '^.+\\.(ts|js|tsx|jsx)$': 'ts-jest',
-    '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
+   // '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     //'^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
   },
   transformIgnorePatterns: [
