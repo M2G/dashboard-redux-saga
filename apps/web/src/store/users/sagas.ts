@@ -8,9 +8,9 @@ import {
   userProfilService,
 } from './services';
 
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 import { history } from '@/index';
-import { clearAccessTokenStorage, clearUserStorage } from '@/services/storage';
+import { clearAccessTokenStorage, clearUserStorage } from '@/storage/storage';
 import signoutUserAction from '@/store/auth/signout/actions';
 import Config from '@/constants';
 import {
