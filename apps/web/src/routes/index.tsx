@@ -14,12 +14,8 @@ import PublicRoutes from './PublicRoutes';
  * @returns {Component}
  */
 
-interface Auth {
-  isAuth: boolean;
-}
-
 function Router(): JSX.Element {
-  const { isAuth } = useContext(AuthContext) as Auth;
+  const { isAuth } = useContext(AuthContext);
 
   return (
     <main>

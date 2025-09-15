@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 

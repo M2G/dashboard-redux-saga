@@ -3,7 +3,7 @@ import { lazy } from 'react';
 import { Navigate, Route, Routes } from 'react-router';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/Sidebar';
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 
 const Home = lazy(() => import('@/containers/Home'));
 const Users = lazy(() => import('@/containers/Users2'));
