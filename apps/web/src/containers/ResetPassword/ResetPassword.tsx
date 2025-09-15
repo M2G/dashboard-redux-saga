@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from "react-router-dom";
-import { authRecoverPasswordAction } from "store/auth/actions";
+import { authRecoverPasswordAction } from "@/store/users/actions";
 
-import ResetPasswordView from './ResetPassword';
+import ResetPasswordForm from '@/components/ResetPasswordForm';
 import { INITIAL_VALUES } from './constants';
 
 function ResetPassword() {
@@ -14,11 +14,10 @@ function ResetPassword() {
     const searchParams = new URLSearchParams(search);
     if (searchParams.has("token")) {
       const token = searchParams.get("token");
-      console.log('dispatch', { ...e, token });
       dispatch(authRecoverPasswordAction({ ...e, token }));
-    }}, [dispatch]);
+    }}, []);
 
-  return <ResetPasswordView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
+  return <ResetPasswordForm initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
 }
 
 export default ResetPassword;
