@@ -1,15 +1,11 @@
-import ROUTER_PATH from './RouterPath';
-import { getAuthStorage } from '@/services/storage';
+import ROUTER_PATH from './constants';
+import { getAccessTokenStorage } from '@/storage/storage';
 
-const state = JSON.parse(getAuthStorage() as string)?.state;
-
-const authData = state?.data?.accessToken;
-
-const token = authData || '';
+const token = getAccessTokenStorage();
 
 export default {
   GLOBAL_VAR: {
-    token,
+   token,
   },
   ROUTER_PATH,
 };
