@@ -33,17 +33,6 @@ function clearUserStorage() {
   localStorage.removeItem(STORAGE_KEY_USER);
 }
 
-function setAuthStorage(userData?: string) {
-  localStorage.setItem(KEY_AUTH_STORAGE, userData as string);
-}
-function getAuthStorage() {
-  return localStorage.getItem(KEY_AUTH_STORAGE);
-}
-
-function clearAuthStorage() {
-  localStorage.removeItem(KEY_AUTH_STORAGE);
-}
-
 export {
   clearAccessTokenStorage,
   clearRefreshTokenStorage,
@@ -54,7 +43,4 @@ export {
   setAccessTokenStorage,
   setRefreshTokenStorage,
   setUserStorage,
-  setAuthStorage,
-  getAuthStorage,
-  clearAuthStorage,
 };
