@@ -6,7 +6,7 @@ import type {
   ForkEffect,
 } from 'redux-saga/effects';
 
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 import { history } from '@/index';
 import { all, fork, call, put, take } from 'redux-saga/effects';
 
