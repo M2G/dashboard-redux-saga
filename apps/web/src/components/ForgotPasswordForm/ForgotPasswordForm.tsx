@@ -1,7 +1,7 @@
 import type { SubmitHandler } from 'react-hook-form';
 import type { z } from 'zod';
 
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useTranslation } from 'react-i18next';
