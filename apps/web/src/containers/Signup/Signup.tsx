@@ -1,15 +1,17 @@
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { signupUserAction } from '@/store/auth/signup/actions';
 import { INITIAL_VALUES } from './constants';
-import SignupView from '@/components/SignupForm';
-import { useAuthStore } from '@/store2';
+import SignupView from './Signup';
 
-function Signup() {
-  const registerUser = useAuthStore((state) => state.register);
-  const onSubmit = useCallback(async (e) => {
-    registerUser(e);
-  }, []);
+function Signin() {
+  const dispatch = useDispatch();
+  const onSubmit = useCallback(
+    (e) => dispatch(signupUserAction(e)),
+    [],
+  );
 
   return <SignupView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
 }
 
-export default Signup;
+export default Signin;

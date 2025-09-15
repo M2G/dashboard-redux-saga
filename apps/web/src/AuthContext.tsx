@@ -1,10 +1,5 @@
 import type { Context, JSX, ReactNode } from 'react';
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import {
   clearAccessTokenStorage,
   clearRefreshTokenStorage,
@@ -14,8 +9,7 @@ import {
   setAccessTokenStorage,
   setRefreshTokenStorage,
   setUserStorage,
-  getAuthStorage
-} from '@/services/storage';
+} from '@/storage/storage';
 
 type AuthContextType = {
   activateAuth: (token: {
@@ -51,12 +45,13 @@ interface AuthContextProps {
 // export a provider
 function Provider({ children }: AuthContextProps): JSX.Element {
   const [isAuth, setIsAuth] = useState<boolean | null | string>(
-    () => !!getUserStorage(),
+    () =>  JSON.parse(getUserStorage() as string) || null,
   );
 
   const value = {
     activateAuth(auth?: { accessToken: string; refreshToken: string }) {
-      const decodedToken = JSON.parse(atob(auth?.accessToken?.split('.')?.[1] as string)) || {};
+      const decodedToken =
+        JSON.parse(atob(auth?.accessToken?.split('.')?.[1] as string)) || {};
 
       const user = {
         email: decodedToken.email,
@@ -64,9 +59,9 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       };
 
       setUserStorage(JSON.stringify(user));
-      //setAccessTokenStorage(auth.accessToken);
+      setAccessTokenStorage(auth?.accessToken as string);
       //setRefreshTokenStorage(auth.refreshToken);
-      setIsAuth(true);
+      setIsAuth(JSON.stringify(user));
     },
     isAuth,
     removeAuth() {
@@ -74,7 +69,7 @@ function Provider({ children }: AuthContextProps): JSX.Element {
       setUserStorage(null);
       clearUserStorage();
       //clearRefreshTokenStorage();
-      //clearAccessTokenStorage();
+      clearAccessTokenStorage();
     },
   };
 
