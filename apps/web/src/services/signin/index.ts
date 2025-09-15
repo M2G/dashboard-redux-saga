@@ -1,3 +1,3 @@
-import signinService from './signin';
+import signinUserService from './signin';
 
-export default signinService;
+export default signinUserService;
