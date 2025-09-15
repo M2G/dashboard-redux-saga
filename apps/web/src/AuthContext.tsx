@@ -10,18 +10,15 @@ import {
   setRefreshTokenStorage,
   setUserStorage,
 } from '@/storage/storage';
+import { User } from '@/store/users/types';
 
 type AuthContextType = {
   activateAuth: (token: {
     accessToken?: string;
     refreshToken?: string;
   }) => void;
-  isAuth: boolean | null | string;
+  isAuth: User;
   removeAuth: () => void;
-  userData: {
-    email: string;
-    id: number;
-  } | null;
 };
 
 // @see https://twitter.com/gregberge_/status/1750111230554153450/photo/1
