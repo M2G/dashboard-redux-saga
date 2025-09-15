@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button, Field } from 'ui';
 import type { z } from 'zod';
 
-import ROUTER_PATH from '@/constants/RouterPath';
+import ROUTER_PATH from '@/constants/constants';
 
 import {
   INPUT_NAME,
@@ -20,11 +20,11 @@ import {
 type FormSchemaType = z.infer<typeof formSchema>;
 
 interface IForm {
-  initialValues: { [x: string]: string | undefined };
+  initialValues?: { [x: string]: string | undefined };
   onSubmit: SubmitHandler<FormSchemaType>;
 }
 
-function ChangePassordForm({ initialValues, onSubmit }: IForm): JSX.Element {
+function ChangePassordForm({ initialValues = {}, onSubmit }: IForm): JSX.Element {
   const { t } = useTranslation();
   const {
     control,
