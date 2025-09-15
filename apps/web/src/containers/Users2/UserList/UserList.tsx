@@ -1,57 +1,62 @@
 import { useMemo, useState, useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import {
+  authGetUsersProfilAction,
+  authDeleteUserProfilAction,
+  authUpdateUserProfilAction,
+  authCreateUserProfilAction,
+} from '@/store/users/actions';
+
 import TableWrapper from '@/components/Core/Table/TableWrapper';
 import {
   Sidebar as SidebarWrapper,
   Modal as ModalWrapper,
 } from 'ui/components/organisms';
-import TopLineLoading from '@/components/Loading/TopLineLoading';
+import TopLineLoading from '@/components/Loading';
 import UserListItem from './UserListItem';
 import UserEdit from '@/components/Users/UserEdit';
 import UserNew from '@/components/Users/UserNew';
-import { useUserStore } from '@/store2';
 
 function UserList({ canEdit = false, canDelete = false }): JSX.Element {
   const { t } = useTranslation();
-  const {
-    data,
-    loading,
-    error,
-    get,
-    create,
-    update,
-    delete: deleteUser,
-  } = useUserStore((state) => state);
   const [isOpenedSidebar, setIsOpenedSidebar] = useState(false);
   const [isOpenedModal, setIsOpenedModal] = useState(false);
 
-  const users = data?.results;
+  function selectorUser(s) {
+    return s.users;
+  }
 
-  useEffect(function (): void {
-    get({ filters: '', page: 1, pageSize: 10 });
+  const {
+    data: users,
+    loading
+  } = useSelector(selectorUser);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(authGetUsersProfilAction());
   }, []);
 
   const onSubmit = useCallback(
-    async (user: any) => {
+    async (user) => {
       if (user?.password) {
         // create new user
-        create(user);
-        get({ filters: '', page: 1, pageSize: 10 });
+        dispatch(authCreateUserProfilAction(user));
+        dispatch(authGetUsersProfilAction());
         setIsOpenedSidebar(false);
         return;
       }
 
       // update existing user
-      update({ ...user, id: isOpenedSidebar.id });
-      get({ filters: '', page: 1, pageSize: 10 });
+      dispatch(authUpdateUserProfilAction({ ...user, id: isOpenedSidebar.id }));
       setIsOpenedSidebar(false);
     },
     [isOpenedSidebar?.id],
   );
 
   const onSubmit2 = useCallback(() => {
-    deleteUser(isOpenedModal.id);
-    get({ filters: '', page: 1, pageSize: 10 });
+    dispatch(authDeleteUserProfilAction(isOpenedSidebar.id));
     setIsOpenedModal(false);
   }, [isOpenedModal.id]);
 
@@ -81,7 +86,7 @@ function UserList({ canEdit = false, canDelete = false }): JSX.Element {
     [t],
   );
 
-  if (!users?.length && users?.loading) return <TopLineLoading />;
+ if (loading) return <TopLineLoading />;
 
   return (
     <>
