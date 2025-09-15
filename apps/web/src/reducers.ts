@@ -1,7 +1,7 @@
 import { Reducer } from 'redux';
 
 import {
-  getAccessTokenStorage, clearAccessTokenStorage } from '@/services/storage';
+  getAccessTokenStorage, clearAccessTokenStorage } from '@/storage';
 import { AuthActionTypes, AuthGlobalState } from './types';
 
 // Type-safe initialState!
