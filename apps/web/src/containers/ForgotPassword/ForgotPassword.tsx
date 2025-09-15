@@ -8,7 +8,7 @@ function ForgotPassword() {
   const dispatch = useDispatch();
   const onSubmit = useCallback(
     (e) => dispatch(authForgotPasswordAction(e)),
-    [dispatch],
+    [],
   );
 
   return <ForgotPasswordView initialValues={INITIAL_VALUES} onSubmit={onSubmit} />;
