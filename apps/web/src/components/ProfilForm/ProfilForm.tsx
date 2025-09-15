@@ -59,7 +59,7 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           name={INPUT_NAME.FIRST_NAME}
           type="text"
           {...{ errors, register, control }}
-          defaultValue={initialValues.firstName || ''}
+          defaultValue={initialValues?.first_name}
           required
         />
         <Field
@@ -68,7 +68,7 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           name={INPUT_NAME.LAST_NAME}
           type="text"
           {...{ errors, register, control }}
-          defaultValue={initialValues.last_name || ''}
+          defaultValue={initialValues?.last_name}
           required
         />
         <Field
@@ -77,7 +77,7 @@ function ProfilForm({ initialValues, onSubmit }: IForm): JSX.Element {
           name={INPUT_NAME.EMAIL}
           type="email"
           {...{ errors, register, control }}
-          defaultValue={initialValues.email || ''}
+          defaultValue={initialValues?.email}
           required
         />
         <Button className="w-full" disabled={!isValid} type="submit" variant="primary">
