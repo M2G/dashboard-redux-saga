@@ -14,7 +14,7 @@ function ChangePassword(): JSX.Element {
     async (d) => {
       dispatch(authUpdatePasswordAction({ id, ...d }));
     },
-    [dispatch, id],
+    [id],
   );
 
   return <ChangePassordForm initialValues={INITIAL_VALUES} onSubmit={handleSubmit} />;
